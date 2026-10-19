@@ -243,6 +243,33 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
 }
 
     </style>
+    <style id="admin-access-style">
+#admin-main.hidden, #admin-controls.hidden, #admin-auth-view.hidden { display: none !important; }
+#admin-auth-view { flex: 1; min-height: 0; padding: 34px 20px; align-items: center; justify-content: center; }
+#admin-auth-view:not(.hidden) { display: flex; }
+.admin-auth-card { width: 100%; max-width: 500px; border: 1px solid #dce6d6; border-radius: 24px; background: #fffefa; box-shadow: 0 20px 65px -28px rgba(31,65,38,.25); }
+.admin-auth-hero { padding: 30px 28px; border-top: 4px solid var(--cw-gold); border-radius: 23px 23px 0 0; background: #1b4e3b; color: #fffef5; text-align: center; }
+.admin-auth-hero > div { width: 62px; height: 62px; margin: 0 auto 18px; display: flex; align-items: center; justify-content: center; border: 1px solid #d2e5bd; border-radius: 19px; background: #e2edcf; color: #2c6040; font-size: 25px; }
+.admin-auth-hero h2 { font-size: 28px; line-height: 1.4; font-weight: 700; }
+.admin-auth-hero h2 span { display: block; margin-top: 6px; font-size: 17px; font-weight: 500; color: #dae8cf; }
+.admin-auth-content { padding: 28px; }
+.admin-auth-content > p { font-size: 14px; line-height: 1.9; text-align: center; color: #6e8066; }
+#admin-btn-login { display: flex; width: 100%; min-height: 70px; margin-top: 22px; padding: 16px; gap: 14px; justify-content: center; align-items: center; border: 1px solid #ccdac7; border-radius: 13px; background: #fffefa; color: #2d553e; font-size: 14px; font-weight: 600; line-height: 1.6; }
+#admin-btn-login > i { font-size: 21px; }
+#admin-btn-login:hover:not(:disabled) { background: #eef5e7; border-color: #93b77c; }
+#admin-btn-login:disabled { opacity: .6; }
+#admin-auth-status { min-height: 24px; margin-top: 18px; font-size: 12px; line-height: 1.7; white-space: pre-line; }
+#admin-auth-status[data-error='true'] { color: #b35d4e; }
+#admin-btn-logout { display: inline-flex; min-height: 42px; padding: 10px 12px; gap: 7px; justify-content: center; align-items: center; border: 1px solid #d9e4ce; border-radius: 12px; background: #fffefa; color: #748967; font-size: 12px; }
+#admin-btn-logout:hover { background: #f2f5e9; color: #3b6336; }
+@media (max-width: 720px) {
+    #admin-btn-logout { grid-column: 1 / -1; justify-self: end; min-height: 32px; padding: 6px 10px; font-size: 11px; }
+    #admin-auth-view { padding: 26px 16px; }
+    .admin-auth-content, .admin-auth-hero { padding: 26px 22px; }
+    .admin-auth-hero h2 { font-size: 25px; }
+}
+
+    </style>
 </head>
 <body class="text-slate-800 antialiased h-screen flex flex-col overflow-hidden">
 
@@ -268,7 +295,7 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
                 </div>
             </div>
             
-            <div class="flex items-center gap-3">
+            <div id="admin-controls" class="flex items-center gap-3 hidden">
                 <div class="bg-blue-50 text-blue-700 px-4 py-2 rounded-lg text-sm font-bold border border-blue-100 flex items-center gap-2">
                     <div class="flex flex-col text-right mr-1">
                         <span class="text-[10px] uppercase leading-none opacity-80">总报名人数</span>
@@ -292,12 +319,31 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
                         <span>Eksport Excel</span>
                     </div>
                 </button>
+                <button id="admin-btn-logout" type="button" title="退出 / Log Keluar"><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i><span>退出 / Log Keluar</span></button>
             </div>
         </div>
     </header>
 
     <!-- 主体内容 -->
-    <main class="flex-1 flex flex-col overflow-hidden p-6 gap-4">
+        <!-- 管理员验证通过前不读取报名名单 -->
+    <section id="admin-auth-view" aria-labelledby="admin-auth-title">
+        <div class="admin-auth-card">
+            <div class="admin-auth-hero">
+                <div><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></div>
+                <h2 id="admin-auth-title">老师后台登录<span>Log Masuk Pentadbir</span></h2>
+            </div>
+            <div class="admin-auth-content">
+                <p>仅限获授权的老师使用 DELIMa 账号登录。<br>Hanya guru yang diberi kuasa boleh log masuk dengan akaun DELIMa.</p>
+                <button id="admin-btn-login" type="button" disabled>
+                    <i class="fa-brands fa-google" aria-hidden="true"></i>
+                    <span id="admin-login-label">使用 DELIMa 账号登录<br>Log Masuk dengan DELIMa</span>
+                </button>
+                <p id="admin-auth-status" role="status" aria-live="polite">正在检查登录状态… / Menyemak status log masuk…</p>
+            </div>
+        </div>
+    </section>
+
+    <main id="admin-main" class="flex-1 flex flex-col overflow-hidden p-6 gap-4 hidden">
         <!-- 搜索栏 -->
         <div class="flex-shrink-0 bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center gap-4">
             <div class="relative flex-1 max-w-md">
@@ -411,7 +457,8 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getFirestore, collection, onSnapshot, doc, deleteDoc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, doc, getDoc, getDocs, setDoc, writeBatch } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Firebase 配置 (Do not change)
         const firebaseConfig = {
@@ -424,6 +471,9 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
         };
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+        const auth = getAuth(app);
+        const googleProvider = new GoogleAuthProvider();
+        googleProvider.setCustomParameters({ prompt: 'select_account', hd: 'moe-dl.edu.my' });
 
         // 绑定 DOM 元素
         const btnExport = document.getElementById('btn-export');
@@ -440,6 +490,13 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
         const deleteModal = document.getElementById('delete-modal');
         const btnCancelDelete = document.getElementById('btn-cancel-delete');
         const btnConfirmDelete = document.getElementById('btn-confirm-delete');
+        const adminMain = document.getElementById('admin-main');
+        const adminControls = document.getElementById('admin-controls');
+        const adminAuthView = document.getElementById('admin-auth-view');
+        const adminLoginButton = document.getElementById('admin-btn-login');
+        const adminLoginLabel = document.getElementById('admin-login-label');
+        const adminLogoutButton = document.getElementById('admin-btn-logout');
+        const adminAuthStatus = document.getElementById('admin-auth-status');
 
         // Toast UI 通知系统 (取代违规的 alert 弹窗)
         const toastEl = document.getElementById('toast-notification');
@@ -492,16 +549,195 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
         let allRecords = [];
         let deleteTargetId = null;
 
-        // 从 Firebase 实时读取报名数据
-        onSnapshot(collection(db, 'club_registrations'), (snapshot) => {
+        const ADMIN_UID = '7MfwqnqTMrcvXEIGJjqFdlO9B192';
+        let adminUserId = null;
+        let adminReady = false;
+        let unsubscribeRecords = null;
+
+        function isAdminUser(user) {
+            return Boolean(user && user.uid === ADMIN_UID && user.emailVerified === true &&
+                typeof user.email === 'string' && /^[^@\s]+@moe-dl\.edu\.my$/i.test(user.email) &&
+                Array.isArray(user.providerData) &&
+                user.providerData.some(provider => provider.providerId === 'google.com'));
+        }
+
+        function currentAdmin(uid = adminUserId) {
+            return Boolean(uid && adminUserId === uid && isAdminUser(auth.currentUser) && auth.currentUser.uid === uid);
+        }
+
+        function requireAdminSession(uid = adminUserId) {
+            if (!currentAdmin(uid)) {
+                const error = new Error('需要管理员 DELIMa 登录 / Log masuk pentadbir DELIMa diperlukan.');
+                error.code = 'app/admin-required';
+                throw error;
+            }
+            return auth.currentUser;
+        }
+
+        function setAuthMessage(message, isError = false) {
+            adminAuthStatus.textContent = message;
+            adminAuthStatus.setAttribute('data-error', String(isError));
+        }
+
+        function setManagementEnabled(enabled) {
+            [btnSettings, btnExport, btnConfirmDelete, btnSaveSettings].forEach(button => button.disabled = !enabled);
+        }
+
+        function clearAdminData() {
+            if (unsubscribeRecords) unsubscribeRecords();
+            unsubscribeRecords = null;
+            adminUserId = null;
+            adminReady = false;
             allRecords = [];
-            snapshot.forEach(doc => {
-                allRecords.push({ id: doc.id, ...doc.data() });
-            });
-            allRecords.sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0));
-            loadingState.classList.add('hidden');
-            renderTable(allRecords);
-        });
+            deleteTargetId = null;
+            tableBody.innerHTML = '';
+            totalCountEl.innerText = '0';
+            searchInput.value = '';
+            settingsContainer.innerHTML = '';
+            deleteModal.classList.add('hidden');
+            modalSettings.classList.add('hidden');
+            toastEl.classList.add('hidden');
+            adminMain.classList.add('hidden');
+            adminControls.classList.add('hidden');
+            adminAuthView.classList.remove('hidden');
+            setManagementEnabled(false);
+        }
+
+        function ensureAdminAccess() {
+            if (!currentAdmin()) {
+                clearAdminData();
+                setAuthMessage('请使用已授权的老师 DELIMa 账号登录。\nSila gunakan akaun DELIMa guru yang diberi kuasa.', true);
+                return false;
+            }
+            if (!adminReady) {
+                showToast('正在准备报名资料，请稍候。', 'Data pendaftaran sedang disediakan. Sila tunggu.');
+                return false;
+            }
+            return true;
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, character => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[character]));
+        }
+
+        function validSelectionData(selections) {
+            if (!selections || typeof selections !== 'object' || Object.keys(selections).length !== 3) return false;
+            const categories = Object.values(clubCategories);
+            return [1, 2, 3].every((step, index) => categories[index].includes(selections[`step${step}`]));
+        }
+
+        async function synchronizeEnrollmentSummaries(records, uid) {
+            requireAdminSession(uid);
+            const snapshot = await getDocs(collection(db, 'club_enrollments'));
+            requireAdminSession(uid);
+            const existing = new Map();
+            snapshot.forEach(item => existing.set(item.id, item.data()));
+            const pending = [];
+            let invalid = 0;
+            for (const record of records) {
+                if (!validSelectionData(record.selections)) { invalid++; continue; }
+                const selections = { step1: record.selections.step1, step2: record.selections.step2, step3: record.selections.step3 };
+                const old = existing.get(record.id);
+                const same = old && Object.keys(old).length === 1 && old.selections &&
+                    Object.keys(old.selections).length === 3 &&
+                    [1, 2, 3].every(step => old.selections[`step${step}`] === selections[`step${step}`]);
+                if (!same) pending.push({ id: record.id, selections });
+            }
+            // Keep each migration batch below the cross-document rules access limit.
+            for (let offset = 0; offset < pending.length; offset += 8) {
+                requireAdminSession(uid);
+                const batch = writeBatch(db);
+                pending.slice(offset, offset + 8).forEach(item => {
+                    batch.set(doc(db, 'club_enrollments', item.id), { selections: item.selections });
+                });
+                await batch.commit();
+            }
+            requireAdminSession(uid);
+            return { synced: pending.length, invalid };
+        }
+
+        function reportDataError(error, uid) {
+            if (!currentAdmin(uid)) return;
+            console.error('Admin data unavailable:', error);
+            adminReady = false;
+            setManagementEnabled(false);
+            loadingState.classList.remove('hidden');
+            loadingState.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-3xl mb-4"></i><p class="font-bold text-center px-4">资料读取或统计同步失败，请确认配套规则已发布后刷新重试。</p><p class="text-sm mt-2 text-center px-4">Gagal memuatkan data. Semak peraturan dan muat semula halaman.</p>';
+        }
+
+        function startRecordSubscription(uid) {
+            let initialSync = null;
+            let syncNoticeShown = false;
+            loadingState.classList.remove('hidden');
+            loadingState.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin text-4xl mb-4"></i><p class="font-bold">正在读取报名并同步名额统计…</p><p class="text-sm mt-2">Memuatkan pendaftaran dan menyegerak statistik…</p>';
+            unsubscribeRecords = onSnapshot(collection(db, 'club_registrations'), async snapshot => {
+                if (!currentAdmin(uid)) return;
+                allRecords = [];
+                snapshot.forEach(item => allRecords.push({ ...item.data(), id: item.id }));
+                allRecords.sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0));
+                try {
+                    if (!initialSync) initialSync = synchronizeEnrollmentSummaries([...allRecords], uid);
+                    const report = await initialSync;
+                    requireAdminSession(uid);
+                    adminReady = true;
+                    setManagementEnabled(true);
+                    loadingState.classList.add('hidden');
+                    renderTable(allRecords);
+                    if (!syncNoticeShown) {
+                        syncNoticeShown = true;
+                        if (report.invalid) {
+                            showToast(`有 ${report.invalid} 笔旧报名的选课字段不完整，请核对。`, 'Sila semak rekod lama yang tidak lengkap.', 'error');
+                        } else if (report.synced) {
+                            showToast(`已补齐 ${report.synced} 笔旧报名的名额统计。`, 'Statistik pendaftaran lama telah disegerakkan.', 'success');
+                        }
+                    }
+                } catch (error) { reportDataError(error, uid); }
+            }, error => reportDataError(error, uid));
+        }
+
+        async function handleAdminAuthChange(user) {
+            clearAdminData();
+            adminLoginButton.disabled = false;
+            if (!user) {
+                setAuthMessage('请使用获授权的老师 DELIMa 账号。\nSila gunakan akaun DELIMa guru yang diberi kuasa.');
+                return;
+            }
+            if (!isAdminUser(user)) {
+                try { await signOut(auth); } catch (error) { console.error('Rejected admin sign-out failed:', error); }
+                setAuthMessage('此账号没有后台管理权限，请使用已授权的老师 DELIMa 账号。\nAkaun ini tiada kebenaran pentadbir.', true);
+                return;
+            }
+            adminUserId = user.uid;
+            adminAuthView.classList.add('hidden');
+            adminMain.classList.remove('hidden');
+            adminControls.classList.remove('hidden');
+            startRecordSubscription(user.uid);
+        }
+
+        async function handleAdminLogin() {
+            adminLoginButton.disabled = true;
+            adminLoginLabel.textContent = '正在登录… / Sedang log masuk…';
+            try {
+                await signInWithPopup(auth, googleProvider);
+            } catch (error) {
+                console.error('Admin login failed:', error);
+                clearAdminData();
+                const unavailable = error.code === 'auth/unauthorized-domain' || error.code === 'auth/operation-not-allowed';
+                setAuthMessage(unavailable ? '登录服务尚未启用，请检查 Google 登录及网站授权设置。\nPerkhidmatan log masuk belum diaktifkan.' : '登录失败或已取消，请重试。\nLog masuk gagal atau dibatalkan. Sila cuba lagi.', true);
+            } finally {
+                adminLoginLabel.innerHTML = '使用 DELIMa 账号登录<br>Log Masuk dengan DELIMa';
+                adminLoginButton.disabled = false;
+            }
+        }
+
+        async function handleAdminLogout() {
+            clearAdminData();
+            try { await signOut(auth); }
+            catch (error) { console.error('Admin sign-out failed:', error); setAuthMessage('退出失败，页面资料已清除，请关闭此网页。\nGagal log keluar. Sila tutup halaman ini.', true); }
+        }
+
 
         // 渲染表格数据
         function renderTable(data) {
@@ -515,18 +751,18 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
             emptyState.classList.add('hidden');
 
             data.forEach(record => {
-                const time = record.timestamp ? new Date(record.timestamp).toLocaleString() : '-';
-                const cls = record.studentInfo?.cls || '-';
-                const name = record.studentInfo?.name || '-';
+                const time = escapeHtml(record.timestamp ? new Date(record.timestamp).toLocaleString() : '-');
+                const cls = escapeHtml(record.studentInfo?.cls || '-');
+                const name = escapeHtml(record.studentInfo?.name || '-');
                 
                 let uniform = record.selections?.step1 || '未选 / Tiada';
-                if(clubNames[uniform]) uniform = clubNames[uniform];
+                uniform = escapeHtml(clubNames[uniform] || uniform);
                 
                 let society = record.selections?.step2 || '未选 / Tiada';
-                if(clubNames[society]) society = clubNames[society];
+                society = escapeHtml(clubNames[society] || society);
                 
                 let sports = record.selections?.step3 || '未选 / Tiada';
-                if(clubNames[sports]) sports = clubNames[sports];
+                sports = escapeHtml(clubNames[sports] || sports);
 
                 const tr = document.createElement('tr');
                 tr.className = "hover:bg-slate-50 transition-colors group";
@@ -538,7 +774,7 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
                     <td class="p-4"><span class="bg-amber-50 text-amber-700 py-1 px-3 rounded-lg text-xs border border-amber-100">${society}</span></td>
                     <td class="p-4"><span class="bg-blue-50 text-blue-700 py-1 px-3 rounded-lg text-xs border border-blue-100">${sports}</span></td>
                     <td class="p-4 pr-6 text-right">
-                        <button class="btn-delete text-slate-300 hover:text-red-500 hover:bg-red-50 w-8 h-8 rounded-lg transition-all" data-id="${record.id}" title="删除记录 / Padam">
+                        <button class="btn-delete text-slate-300 hover:text-red-500 hover:bg-red-50 w-8 h-8 rounded-lg transition-all" data-id="${escapeHtml(record.id)}" title="删除记录 / Padam">
                             <i class="fa-solid fa-trash-can"></i>
                         </button>
                     </td>
@@ -549,6 +785,7 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
             // 重新绑定删除按钮事件
             document.querySelectorAll('.btn-delete').forEach(btn => {
                 btn.addEventListener('click', (e) => {
+                    if (!ensureAdminAccess()) return;
                     deleteTargetId = e.currentTarget.getAttribute('data-id');
                     deleteModal.classList.remove('hidden');
                 });
@@ -557,6 +794,7 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
 
         // 搜索过滤
         searchInput.addEventListener('input', (e) => {
+            if (!ensureAdminAccess()) return;
             const keyword = e.target.value.toLowerCase();
             const filtered = allRecords.filter(r => 
                 (r.studentInfo?.name || '').toLowerCase().includes(keyword) || 
@@ -572,16 +810,25 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
         
         // 确认删除功能
         btnConfirmDelete.addEventListener('click', async () => {
+            if (!ensureAdminAccess()) return;
             if (!deleteTargetId) return;
+            const sessionUid = adminUserId;
+            const targetId = deleteTargetId;
             const originalText = btnConfirmDelete.innerHTML;
             btnConfirmDelete.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> 删除中 / Memadam...`;
             btnConfirmDelete.disabled = true;
             try {
-                await deleteDoc(doc(db, "club_registrations", deleteTargetId));
+                requireAdminSession(sessionUid);
+                const batch = writeBatch(db);
+                batch.delete(doc(db, 'club_registrations', targetId));
+                batch.delete(doc(db, 'club_enrollments', targetId));
+                await batch.commit();
+                requireAdminSession(sessionUid);
                 deleteModal.classList.add('hidden');
+                deleteTargetId = null;
                 showToast("成功删除记录，名额已释放", "Rekod berjaya dipadam, kuota telah dilepaskan.", "success");
             } catch (error) {
-                showToast("删除失败，请检查网络连接！", "Ralat memadam data, periksa sambungan internet.", "error");
+                if (currentAdmin(sessionUid)) showToast("删除失败，请检查网络连接！", "Ralat memadam data, periksa sambungan internet.", "error");
             } finally {
                 btnConfirmDelete.innerHTML = originalText;
                 btnConfirmDelete.disabled = false;
@@ -590,6 +837,7 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
 
         // 导出真正的 Excel 文件 (SheetJS)
         btnExport.addEventListener('click', () => {
+            if (!ensureAdminAccess()) return;
             if (allRecords.length === 0) {
                 showToast("目前没有任何数据可导出！", "Tiada data untuk dieksport setakat ini.", "error");
                 return;
@@ -645,11 +893,15 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
 
         // 名额设定弹窗 (Live Capacity Settings)
         btnSettings.addEventListener('click', async () => {
+            if (!ensureAdminAccess()) return;
+            const sessionUid = adminUserId;
             modalSettings.classList.remove('hidden');
             settingsContainer.innerHTML = '<div class="text-center py-10"><i class="fa-solid fa-spinner fa-spin text-brand-500 text-2xl"></i> 读取中 / Memuatkan...</div>';
             
             try {
+                requireAdminSession(sessionUid);
                 const capDoc = await getDoc(doc(db, 'club_settings', 'capacities'));
+                requireAdminSession(sessionUid);
                 const customCapacities = capDoc.exists() ? capDoc.data() : {};
                 
                 let html = '';
@@ -659,7 +911,8 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
                     
                     ids.forEach(id => {
                         const name = clubNames[id];
-                        const cap = customCapacities[id] !== undefined ? customCapacities[id] : 40;
+                        const storedCap = Number(customCapacities[id]);
+                        const cap = Number.isSafeInteger(storedCap) && storedCap >= 0 ? storedCap : 40;
                         
                         // 计算真实报名人数
                         const currentEnrolled = allRecords.filter(r => 
@@ -686,7 +939,7 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
                 settingsContainer.innerHTML = html;
             } catch (err) {
                 console.error(err);
-                settingsContainer.innerHTML = `<div class="text-center text-red-500 py-8 font-bold"><i class="fa-solid fa-triangle-exclamation"></i> 读取失败，请检查网络 / Ralat memuatkan data</div>`;
+                if (currentAdmin(sessionUid)) settingsContainer.innerHTML = `<div class="text-center text-red-500 py-8 font-bold"><i class="fa-solid fa-triangle-exclamation"></i> 读取失败，请检查网络 / Ralat memuatkan data</div>`;
             }
         });
 
@@ -697,6 +950,8 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
 
         // 保存设定到 Firebase
         btnSaveSettings.addEventListener('click', async () => {
+            if (!ensureAdminAccess()) return;
+            const sessionUid = adminUserId;
             const inputs = document.querySelectorAll('.capacity-input');
             const newCapacities = {};
             
@@ -713,13 +968,16 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
             btnSaveSettings.disabled = true;
             
             try {
+                requireAdminSession(sessionUid);
                 await setDoc(doc(db, 'club_settings', 'capacities'), newCapacities, { merge: true });
+                requireAdminSession(sessionUid);
                 
                 btnSaveSettings.innerHTML = `<i class="fa-solid fa-check"></i> 保存成功 / Berjaya!`;
                 btnSaveSettings.classList.replace('bg-blue-600', 'bg-green-600');
                 showToast("设定已保存", "Tetapan telah berjaya disimpan.", "success");
                 
                 setTimeout(() => {
+                    if (!currentAdmin(sessionUid)) return;
                     modalSettings.classList.add('hidden');
                     btnSaveSettings.innerHTML = originalHTML;
                     btnSaveSettings.classList.replace('bg-green-600', 'bg-blue-600');
@@ -727,10 +985,21 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
                 }, 1500);
             } catch (err) {
                 console.error(err);
+                if (!currentAdmin(sessionUid)) return;
                 showToast("保存设定失败，请重试！", "Gagal menyimpan tetapan, sila cuba lagi.", "error");
                 btnSaveSettings.innerHTML = originalHTML;
                 btnSaveSettings.disabled = false;
             }
+        });
+
+        adminLoginButton.addEventListener('click', handleAdminLogin);
+        adminLogoutButton.addEventListener('click', handleAdminLogout);
+        clearAdminData();
+        onAuthStateChanged(auth, handleAdminAuthChange, error => {
+            console.error('Admin auth unavailable:', error);
+            clearAdminData();
+            adminLoginButton.disabled = false;
+            setAuthMessage('无法检查登录状态，请刷新重试。\nTidak dapat menyemak log masuk. Sila muat semula halaman.', true);
         });
     </script>
 </body>

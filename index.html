@@ -457,7 +457,7 @@ body > main { max-width: 1088px; padding: 32px 28px 44px; }
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, collection, getDocs, writeBatch } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // ==========================================
         // ⚠️ 第 1 步：在这里填入您的 Firebase Config
@@ -623,6 +623,12 @@ body > main { max-width: 1088px; padding: 32px 28px 44px; }
             return user;
         }
 
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, character => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[character]));
+        }
+
         function setupStaticText() {
             document.getElementById('google-login-text').innerHTML = I18N.googleLogin;
             document.getElementById('label-student-name').innerHTML = I18N.studentName;
@@ -699,7 +705,7 @@ body > main { max-width: 1088px; padding: 32px 28px 44px; }
             const sessionUser = requireDelimaSession();
             try {
                 console.log("正在实时获取 Firebase 各社团报名人数...");
-                const snapshot = await getDocs(collection(db, 'club_registrations'));
+                const snapshot = await getDocs(collection(db, 'club_enrollments'));
                 
                 // 初始化计数器
                 const counts = {};
@@ -988,11 +994,11 @@ body > main { max-width: 1088px; padding: 32px 28px 44px; }
             details.innerHTML = `
                 <div class="flex justify-between items-center py-3 border-b border-gray-200">
                     <span class="text-gray-500 text-sm">学生姓名<br><span class="uppercase mt-0.5 block">Nama Pelajar</span></span>
-                    <span class="font-bold text-gray-900 text-lg uppercase">${STATE.studentInfo.name}</span>
+                    <span class="font-bold text-gray-900 text-lg uppercase">${escapeHtml(STATE.studentInfo.name)}</span>
                 </div>
                 <div class="flex justify-between items-center py-3 mb-3 border-b border-gray-200">
                     <span class="text-gray-500 text-sm">班级<br><span class="uppercase mt-0.5 block">Kelas</span></span>
-                    <span class="font-bold text-gray-900 text-lg uppercase">${STATE.studentInfo.cls}</span>
+                    <span class="font-bold text-gray-900 text-lg uppercase">${escapeHtml(STATE.studentInfo.cls)}</span>
                 </div>
                 <div class="pt-2">
                     <span class="text-xs text-brand-600 font-bold tracking-widest uppercase mb-3 block border-b border-brand-100 pb-2">Selections / 已选</span>
@@ -1011,6 +1017,21 @@ body > main { max-width: 1088px; padding: 32px 28px 44px; }
             let sessionUser;
             try {
                 sessionUser = requireDelimaSession();
+                const docRef = doc(db, 'club_registrations', sessionUser.uid);
+                const existingRecord = await getDoc(docRef);
+                requireDelimaSession(sessionUser.uid);
+                if (existingRecord.exists()) {
+                    const existingData = existingRecord.data();
+                    if (!existingData.submitted) {
+                        const error = new Error('账号已有报名资料，请联系老师处理。\nAkaun ini mempunyai rekod. Sila hubungi guru.');
+                        error.code = 'app/registration-exists';
+                        throw error;
+                    }
+                    STATE.studentInfo = existingData.studentInfo;
+                    STATE.selections = existingData.selections;
+                    showStep(5);
+                    return;
+                }
                 // 提交前再次验证真实登录状态及最新名额。
                 await fetchClubCapacities();
                 requireDelimaSession(sessionUser.uid);
@@ -1034,14 +1055,17 @@ body > main { max-width: 1088px; padding: 32px 28px 44px; }
                     return;
                 }
 
-                const docRef = doc(db, 'club_registrations', sessionUser.uid);
-                await setDoc(docRef, {
+                const selections = { ...STATE.selections };
+                const batch = writeBatch(db);
+                batch.set(docRef, {
                     studentInfo: STATE.studentInfo,
                     parentEmail: sessionUser.email,
-                    selections: STATE.selections,
+                    selections,
                     submitted: true,
                     timestamp: new Date().toISOString()
                 });
+                batch.set(doc(db, 'club_enrollments', sessionUser.uid), { selections });
+                await batch.commit();
                 requireDelimaSession(sessionUser.uid);
                 showStep(5); // 仅在真实写入成功后显示成功页面。
             } catch (err) {
@@ -1052,7 +1076,7 @@ body > main { max-width: 1088px; padding: 32px 28px 44px; }
                     alert(DELIMA_LOGIN_MESSAGE);
                     return;
                 }
-                alert("读取或保存资料失败，请检查网络后重试。\nGagal memuatkan atau menyimpan data. Sila cuba lagi.");
+                alert(err.code === 'app/registration-exists' ? err.message : "读取或保存资料失败，请检查网络后重试。\nGagal memuatkan atau menyimpan data. Sila cuba lagi.");
                 DOM.btnNextText.innerHTML = I18N.btnSubmit;
                 DOM.btnNext.disabled = false;
                 DOM.btnPrev.disabled = false;
