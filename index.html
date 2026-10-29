@@ -548,6 +548,113 @@ body > main { padding-top: clamp(24px, 4vw, 46px); }
 #success-details>div:first-child>span:last-child{max-width:65%;text-align:right;overflow-wrap:anywhere}
 @media(max-width:480px){.roster-review{align-items:flex-start;flex-direction:column}.roster-review button{align-self:flex-end}#input-student-name{font-size:14px}}
 </style>
+
+<style id="centered-login-background">
+/* Presentation only: existing pictures become a backdrop behind a centered login card. */
+body:has(#view-login:not(.hidden)) {
+    position: relative;
+    isolation: isolate;
+    background: #dce7d7 !important;
+}
+body:has(#view-login:not(.hidden))::before,
+body:has(#view-login:not(.hidden))::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+}
+body:has(#view-login:not(.hidden))::before {
+    z-index: -2;
+    background: var(--cw-photo-campus) center 46% / cover no-repeat;
+    filter: saturate(.78) blur(1.5px);
+    transform: scale(1.015);
+}
+body:has(#view-login:not(.hidden))::after {
+    z-index: -1;
+    background: linear-gradient(115deg, rgba(15, 48, 34, .48), rgba(35, 64, 43, .24) 48%, rgba(15, 43, 31, .5));
+}
+body > main:has(#view-login:not(.hidden)) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: none;
+    min-height: calc(100svh - 84px);
+    padding: 36px 20px;
+}
+#view-login {
+    width: min(100%, 500px);
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, .8);
+    border-radius: 26px;
+    background: #fffefa;
+    box-shadow: 0 24px 70px rgba(8, 31, 21, .28), 0 3px 16px rgba(8, 31, 21, .1);
+}
+#view-login:not(.hidden) { display: block; }
+#view-login::before,
+#view-login::after,
+#view-login:has(#student-form:not(.hidden))::after {
+    content: none !important;
+    display: none !important;
+}
+#view-login > div:first-child {
+    min-height: 0;
+    margin: 0;
+    padding: 32px 30px 28px;
+    border-radius: 0;
+    border-top: 3px solid #d6bb79;
+    background: radial-gradient(ellipse at 90% 0%, rgba(149, 183, 117, .12), transparent 70%), #1b4e3b;
+}
+#view-login > div:first-child > div:first-child {
+    width: 58px;
+    height: 58px;
+    margin-bottom: 18px;
+    border-radius: 18px;
+    font-size: 25px;
+}
+#login-header-title { font-size: 29px; }
+#login-header-title > span { margin-top: 8px; font-size: 17px; }
+#login-header-desc { margin-top: 14px; font-size: 13px; line-height: 1.85; }
+#auth-section,
+#student-form {
+    grid-column: auto;
+    grid-row: auto;
+    min-width: 0;
+    padding: 28px 30px 30px;
+}
+#btn-google-login {
+    min-height: 76px;
+    background: #fff;
+    border-color: #c4d5be;
+    box-shadow: 0 3px 10px rgba(26, 64, 42, .04);
+}
+@media (max-width: 640px) {
+    body > main:has(#view-login:not(.hidden)) {
+        min-height: calc(100svh - 75px);
+        padding: 26px 16px;
+    }
+    body:has(#view-login:not(.hidden))::before {
+        background-position: 58% center;
+    }
+    #view-login {
+        max-width: 460px;
+        border-radius: 22px;
+    }
+    #view-login > div:first-child { padding: 28px 22px 25px; }
+    #login-header-title { font-size: 27px; }
+    #login-header-title > span { font-size: 16px; }
+    #login-header-desc { font-size: 12px; }
+    #auth-section, #student-form { padding: 24px 22px 26px; }
+}
+@media print {
+    body:has(#view-login:not(.hidden)) { background: white !important; }
+    body:has(#view-login:not(.hidden))::before,
+    body:has(#view-login:not(.hidden))::after { display: none; }
+}
+</style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
 
