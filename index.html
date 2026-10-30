@@ -83,11 +83,7 @@
 
 #automatic-society-notice{border:1px solid #caddbd;border-radius:12px;background:#f0f7e9;color:#315b42;padding:15px 18px;margin-bottom:18px;font-size:13px;line-height:1.9;white-space:pre-line;overflow-wrap:anywhere}
 #automatic-society-notice[data-error=true]{background:#fff6e8;color:#955921;border-color:#efd0a7}
-#wizard-nav.profile-return-nav{gap:12px;justify-content:flex-end}
-#wizard-nav.profile-return-nav>.flex-grow{order:0}
-#wizard-nav.profile-return-nav>#btn-prev{order:1;margin-left:auto}
-#wizard-nav.profile-return-nav>#btn-next{order:2}
-@media(max-width:480px){#wizard-nav.profile-return-nav{gap:8px}#wizard-nav.profile-return-nav button{padding-left:13px;padding-right:13px;font-size:12px}#automatic-society-notice{font-size:12px;padding:12px 14px}}
+@media(max-width:480px){#automatic-society-notice{font-size:12px;padding:12px 14px}}
 
 </style>
 
@@ -2051,7 +2047,6 @@ function startSiteTextSubscription() {
             DOM.successContainer.classList.add('hidden');
             
             DOM.btnPrev.classList.toggle('hidden', STATE.step === 5);
-            DOM.wizardNav.classList.toggle('profile-return-nav', STATE.step === 1);
             renderAutomaticSocietyNotice();
             DOM.btnNext.classList.toggle('hidden', STATE.step === 5);
             
