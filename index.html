@@ -655,6 +655,54 @@ body > main:has(#view-login:not(.hidden)) {
     body:has(#view-login:not(.hidden))::after { display: none; }
 }
 </style>
+
+<style id="registration-controls-styles">
+/* Registration controls: timing, eligibility and student identity fields. */
+#registration-notice{border:1px solid #e0e8d9;border-radius:13px;margin:22px 30px 0;padding:13px 14px;background:#f5f8ef;text-align:center}
+#registration-status-title{font-size:13px;font-weight:750;line-height:1.6;color:#29543c}
+#registration-status-detail{font-size:11px;line-height:1.7;color:#65775e;margin-top:4px}
+#registration-notice[data-phase=closed],#registration-notice[data-phase=maintenance]{background:#fff7ed;border-color:#f0d8b2}
+#registration-notice[data-phase=closed] #registration-status-title,#registration-notice[data-phase=maintenance] #registration-status-title{color:#925f25}
+#registration-notice[data-phase=open]{background:#edf8ef;border-color:#bedcc1}
+#registration-countdown{margin-top:12px}
+#countdown-caption{font-size:10px;color:#6d7d61;margin-bottom:8px}
+.countdown-units{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.countdown-units>div{background:#fff;border:1px solid #dbe5cf;border-radius:9px;padding:8px 2px 7px}
+.countdown-units strong{display:block;font-size:23px;line-height:1.1;color:#235e49;font-variant-numeric:tabular-nums}
+.countdown-units span{display:block;font-size:9px;line-height:1.4;color:#738268;margin-top:5px}
+.profile-extra-grid{display:grid;grid-template-columns:1fr;gap:19px;margin-top:22px}
+.profile-extra-grid>div{min-width:0}
+#input-student-gender,#input-student-role{width:100%;min-height:52px;border:1px solid #d8e1d3;border-radius:12px;background:#f8faf4;color:#203e2e;font-size:14px;padding:12px}
+#input-student-role{font-size:12px}
+.eligibility-note{font-size:11px;line-height:1.65;margin-top:9px;color:#52734c;overflow-wrap:anywhere}
+.eligibility-note.denied{color:#a35b39}
+#wizard-registration-notice{font-size:12px;line-height:1.65;padding:12px 16px;margin-bottom:16px;border:1px solid #d5e2c9;border-radius:12px;color:#365d3d;background:#f4f8ec}
+#registration-management,#eligibility-management{flex-shrink:0;background:#fff;border:1px solid #cbded7;border-radius:15px;overflow:hidden;box-shadow:0 2px 10px #153f3210}
+#registration-management>summary,#eligibility-management>summary{font-size:14px;font-weight:750;color:#214f42;padding:14px 18px;cursor:pointer;background:#f3faf6}
+.admin-control-body{padding:16px 18px}
+.admin-control-body p{font-size:12px;line-height:1.7;color:#5c6e63;margin-bottom:12px}
+.registration-fields{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.registration-fields label,.admin-checkline{font-size:12px;font-weight:600;color:#335e4d;line-height:1.6}
+.registration-fields input,.registration-fields select,.eligibility-row select{display:block;width:100%;min-height:41px;font:inherit;font-size:12px;border:1px solid #cbdcd0;border-radius:9px;padding:8px 10px;margin-top:5px;background:#fbfdf9;color:#2c4a38}
+.admin-checkline{display:flex;align-items:center;gap:8px;margin-top:14px}
+.admin-checkline input{width:16px;height:16px;accent-color:#235e49}
+.admin-control-actions{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 12px}
+.admin-control-actions button,#btn-save-eligibility{border:1px solid #235e49;border-radius:9px;background:#235e49;color:#fff;font-size:12px;font-weight:700;padding:10px 15px}
+.admin-control-actions button.secondary{color:#235e49;background:#f6faf1;border-color:#b8d0b9}
+.admin-control-actions button:disabled,#btn-save-eligibility:disabled{opacity:.5;cursor:not-allowed}
+#registration-admin-status,#registration-index-status{white-space:pre-line;background:#f5f9f1;border:1px solid #e0e8d8;padding:12px 14px;border-radius:10px;font-size:12px;line-height:1.7;color:#36583e}
+#registration-index-status{margin-top:10px;max-height:170px;overflow:auto}
+#registration-index-status[data-error=true]{background:#fff8ef;border-color:#efd8b9;color:#8e5e2b}
+#eligibility-rows{max-height:520px;overflow:auto;margin:15px 0}
+#eligibility-rows h4{font-size:13px;font-weight:750;color:#235e49;background:#eef5e8;padding:12px;margin-top:16px;border-radius:8px}
+.eligibility-row{display:grid;grid-template-columns:minmax(220px,1.2fr) minmax(130px,.55fr) minmax(140px,.65fr) minmax(240px,1fr);align-items:center;gap:12px;padding:14px 5px;border-bottom:1px solid #e7eddf}
+.eligibility-club-name{font-size:12px;font-weight:650;line-height:1.6;color:#33513b}
+.eligibility-row label{font-size:10px;color:#6d806b}
+#eligibility-editor-status{font-size:12px;color:#436a3e;margin-top:9px}
+.admin-profile-cell{max-width:280px;white-space:normal;line-height:1.6;font-size:11px;color:#5b6f5b}
+@media(max-width:900px){.registration-fields{grid-template-columns:1fr}.eligibility-row{grid-template-columns:1fr 1fr}.eligibility-club-name{grid-column:1/-1}}
+@media(max-width:640px){#registration-notice{margin:18px 22px 0}.countdown-units strong{font-size:21px}.admin-control-body{padding:14px}.eligibility-row{grid-template-columns:1fr}.eligibility-club-name{grid-column:auto}}
+</style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
 
@@ -694,6 +742,11 @@ body > main:has(#view-login:not(.hidden)) {
                 <p class="text-gray-500 mt-2 text-sm" id="login-header-desc"></p>
             </div>
 
+            <aside id="registration-notice">
+                <div id="registration-status-title" role="status" aria-live="polite">正在准备报名 / Menyediakan Pendaftaran</div><div id="registration-status-detail">马来西亚时间 / Waktu Malaysia</div>
+                <div id="registration-countdown" class="hidden"><div id="countdown-caption"></div><div class="countdown-units"><div><strong id="countdown-days">00</strong><span>天 / Hari</span></div><div><strong id="countdown-hours">00</strong><span>时 / Jam</span></div><div><strong id="countdown-minutes">00</strong><span>分 / Minit</span></div><div><strong id="countdown-seconds">00</strong><span>秒 / Saat</span></div></div></div>
+            </aside>
+
             <!-- Google 登录按钮 -->
             <div id="auth-section" class="flex flex-col items-center">
                 <button id="btn-google-login" type="button" class="w-full py-3.5 px-4 bg-white border border-gray-300 hover:bg-gray-50 hover:border-gray-400 text-gray-700 rounded-xl font-bold shadow-sm transition-all flex items-center justify-center gap-3">
@@ -728,6 +781,10 @@ body > main:has(#view-login:not(.hidden)) {
                     <button id="btn-retry-roster" type="button" class="hidden roster-retry">重新读取名单 / Cuba Lagi</button>
                     <div id="selected-student-name" class="hidden" aria-live="polite"></div>
                 </div>
+                <div class="profile-extra-grid">
+                    <div><label for="input-student-gender">性别 / Jantina</label><select id="input-student-gender" required><option value="" disabled selected>请选择性别 / Pilih Jantina</option><option value="LELAKI">男 / LELAKI</option><option value="PEREMPUAN">女 / PEREMPUAN</option></select></div>
+                    <div><label for="input-student-role">职位 / Jawatan</label><select id="input-student-role" required><option value="" disabled selected>请选择职位 / Pilih Jawatan</option><option value="NONE">无 / TIADA</option><option value="PSS">图书管理员 / PENGAWAS PUSAT SUMBER SEKOLAH</option><option value="PRS">辅导小尖兵 / PEMBIMBING RAKAN SEBAYA</option></select></div>
+                </div>
                 <p class="roster-help">请使用孩子的 DELIMa 账号，并选择孩子本人的姓名。<br>Sila gunakan akaun DELIMa anak dan pilih nama anak sendiri.</p>
                 <button id="btn-student-start" type="submit" disabled class="w-full py-3.5 px-4 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold shadow-md shadow-brand-500/30 transition-all flex items-center justify-center gap-2 mt-6">
                     <span id="label-login-btn"></span>
@@ -740,6 +797,7 @@ body > main:has(#view-login:not(.hidden)) {
         <section id="view-wizard" class="hidden fade-in">
             <!-- 进度条 (Stepper) -->
             <div class="mb-8 px-2">
+                <p id="wizard-registration-notice" role="status" aria-live="polite"></p>
                 <div class="flex items-center justify-between relative">
                     <div class="absolute left-0 top-1/2 transform -translate-y-1/2 w-full h-1 bg-gray-200 z-0 rounded-full"></div>
                     <div id="stepper-progress" class="absolute left-0 top-1/2 transform -translate-y-1/2 h-1 bg-brand-500 z-0 transition-all duration-500 w-0 rounded-full"></div>
@@ -816,7 +874,7 @@ body > main:has(#view-login:not(.hidden)) {
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, collection, getDocs, writeBatch } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, getDocFromServer, collection, getDocs, onSnapshot, runTransaction } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // ==========================================
         // ⚠️ 第 1 步：在这里填入您的 Firebase Config
@@ -905,6 +963,73 @@ body > main:has(#view-login:not(.hidden)) {
             { id: 'sp14', category: 'sports', name_zh: '乒乓', name_ms: 'Pingpong', desc_zh: '', desc_ms: '', capacity: 40, icon: 'fa-table-tennis-paddle-ball', color: 'text-red-500 bg-red-50 border-red-200' }
         ];
 
+        const ALL_CLUB_IDS = ['u1','u2','u3','u4','u5','s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s11','s12','s13','s14','s15','s16','sp1','sp2','sp3','sp4','sp5','sp6','sp7','sp8','sp9','sp10','sp11','sp12','sp13','sp14'];
+        const STUDENT_GENDERS = ['LELAKI', 'PEREMPUAN'];
+        const STUDENT_ROLES = ['NONE', 'PSS', 'PRS'];
+        const GENDER_LABELS = { LELAKI: '男 / LELAKI', PEREMPUAN: '女 / PEREMPUAN' };
+        const ROLE_LABELS = { NONE: '无 / TIADA', PSS: '图书管理员 / PENGAWAS PUSAT SUMBER SEKOLAH', PRS: '辅导小尖兵 / PEMBIMBING RAKAN SEBAYA' };
+        const DEFAULT_OPENING_MS = Date.parse('2026-10-31T10:00:00+08:00');
+
+        function studentKeyFor(cls, name) {
+            return cls.replace(/ /g, '_') + '-' + Array.from(name, ch => ch.codePointAt(0).toString(16).padStart(6, '0')).join('');
+        }
+
+        function defaultRegistrationControl() {
+            return { mode: 'scheduled', startsAt: DEFAULT_OPENING_MS, endsAt: 0, ready: false, showCountdown: true, updatedAt: new Date().toISOString() };
+        }
+
+        function validRegistrationControl(data) {
+            return Boolean(data && ['scheduled', 'open', 'closed'].includes(data.mode) &&
+                Number.isSafeInteger(data.startsAt) && data.startsAt > 0 &&
+                Number.isSafeInteger(data.endsAt) && data.endsAt >= 0 &&
+                (data.endsAt === 0 || data.endsAt > data.startsAt) && typeof data.ready === 'boolean' && typeof data.showCountdown === 'boolean');
+        }
+
+        function registrationPhase(data, now = Date.now()) {
+            if (!validRegistrationControl(data)) return 'setup';
+            if (!data.ready) return 'maintenance';
+            if (data.mode === 'closed') return 'closed';
+            if (data.mode === 'open') return 'open';
+            if (now < data.startsAt) return 'upcoming';
+            if (data.endsAt > 0 && now >= data.endsAt) return 'closed';
+            return 'open';
+        }
+
+        function defaultEligibilityPolicies() {
+            return Object.fromEntries(ALL_CLUB_IDS.map(id => [id, { enabled: true, genders: [...STUDENT_GENDERS], roles: [...STUDENT_ROLES] }]));
+        }
+
+        function validClubPolicy(policy) {
+            return Boolean(policy && typeof policy.enabled === 'boolean' &&
+                Array.isArray(policy.genders) && policy.genders.length > 0 && policy.genders.length <= 2 &&
+                policy.genders.every(value => STUDENT_GENDERS.includes(value)) && new Set(policy.genders).size === policy.genders.length &&
+                Array.isArray(policy.roles) && policy.roles.length > 0 && policy.roles.length <= 3 &&
+                policy.roles.every(value => STUDENT_ROLES.includes(value)) && new Set(policy.roles).size === policy.roles.length);
+        }
+
+        function validEligibilityPolicies(policies) {
+            return Boolean(policies && typeof policies === 'object' && Object.keys(policies).length === ALL_CLUB_IDS.length &&
+                ALL_CLUB_IDS.every(id => validClubPolicy(policies[id])));
+        }
+
+        function policyAllows(policy, info) {
+            return Boolean(validClubPolicy(policy) && info && policy.enabled &&
+                policy.genders.includes(info.gender) && policy.roles.includes(info.role));
+        }
+
+        function policyDescription(policy) {
+            if (!validClubPolicy(policy)) return '资格设置尚未就绪 / Tetapan kelayakan belum tersedia';
+            if (!policy.enabled) return '此活动暂不开放 / Aktiviti ditutup';
+            const conditions = [];
+            if (policy.genders.length === 1) conditions.push(policy.genders[0] === 'LELAKI' ? '仅限男学生 / Murid lelaki sahaja' : '仅限女学生 / Murid perempuan sahaja');
+            if (policy.roles.length < 3) conditions.push(policy.roles.map(role => ROLE_LABELS[role]).join(' 或 / atau '));
+            return conditions.join('；') || '不限性别及职位 / Semua jantina dan jawatan';
+        }
+
+        function malaysiaDateTime(milliseconds) {
+            return new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kuching', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date(milliseconds));
+        }
+
         const STATE = {
             step: 0,
             studentInfo: null,
@@ -962,6 +1087,7 @@ body > main:has(#view-login:not(.hidden)) {
         }
 
         function resetSessionState() {
+            stopStudentSubscriptions();
             STATE.step = 0;
             STATE.userId = null;
             STATE.parentEmail = null;
@@ -1020,6 +1146,7 @@ body > main:has(#view-login:not(.hidden)) {
             rosterEpoch++;
             rosterNames = [];
             rosterClass = '';
+            rosterStudents = {};
             DOM.studentName.disabled = true;
             DOM.studentClass.disabled = false;
             DOM.studentSubmit.disabled = true;
@@ -1035,20 +1162,32 @@ body > main:has(#view-login:not(.hidden)) {
             requireDelimaSession();
             const cls = DOM.studentClass.value;
             const name = DOM.studentName.value;
-            if (rosterClass !== cls || !ROSTER_CLASSES.includes(cls) || !rosterNames.includes(name)) {
-                const error = new Error('请从所选班级的名单中选择学生姓名。\nSila pilih nama murid daripada senarai kelas.');
-                error.code = 'app/roster-selection';
-                throw error;
+            const studentKey = studentKeyFor(cls, name);
+            if (rosterClass !== cls || !ROSTER_CLASSES.includes(cls) || !rosterNames.includes(name) ||
+                rosterStudents[studentKey] !== name || claimedStudents.has(studentKey)) {
+                throw appError('app/roster-selection', '请选择尚未报名的学生姓名。如学生姓名已消失，请联系老师。\nSila pilih murid yang belum berdaftar. Hubungi guru jika nama tidak dipaparkan.');
             }
-            return { name, cls };
+            return { name, cls, studentKey };
         }
 
         function updateRosterSelection() {
             const allowed = isDelimaUser(auth?.currentUser) && auth.currentUser.uid === STATE.userId;
-            const valid = allowed && rosterClass === DOM.studentClass.value && rosterNames.includes(DOM.studentName.value);
-            DOM.studentSubmit.disabled = !valid;
-            DOM.selectedStudent.textContent = valid ? DOM.studentName.value : '';
-            DOM.selectedStudent.classList.toggle('hidden', !valid);
+            const name = DOM.studentName.value;
+            const key = studentKeyFor(DOM.studentClass.value, name);
+            const validName = allowed && rosterClass === DOM.studentClass.value && rosterNames.includes(name) &&
+                rosterStudents[key] === name && !claimedStudents.has(key);
+            const valid = validName && STUDENT_GENDERS.includes(document.getElementById('input-student-gender').value) &&
+                STUDENT_ROLES.includes(document.getElementById('input-student-role').value);
+            DOM.studentSubmit.disabled = !valid || !canRegister() || submissionInProgress;
+            const selectedText = validName ? name : '';
+            if (DOM.selectedStudent.textContent !== selectedText) DOM.selectedStudent.textContent = selectedText;
+            DOM.selectedStudent.classList.toggle('hidden', !validName);
+            const phase = registrationPhase(registrationControl);
+            const buttonText = phase === 'upcoming' ? '尚未开放 / Belum Dibuka' :
+                phase === 'closed' ? '报名已关闭 / Pendaftaran Ditutup' :
+                !canRegister() ? '正在准备报名 / Menyediakan Pendaftaran' : I18N.loginBtn;
+            const buttonLabel = document.getElementById('label-login-btn');
+            if (buttonLabel.textContent !== buttonText) buttonLabel.textContent = buttonText;
         }
 
         async function loadSelectedClassRoster() {
@@ -1057,6 +1196,7 @@ body > main:has(#view-login:not(.hidden)) {
             const cls = DOM.studentClass.value;
             rosterNames = [];
             rosterClass = '';
+            rosterStudents = {};
             STATE.studentInfo = null;
             DOM.studentName.disabled = true;
             DOM.studentSubmit.disabled = true;
@@ -1083,18 +1223,11 @@ body > main:has(#view-login:not(.hidden)) {
                     error.code = 'app/roster-unavailable';
                     throw error;
                 }
+                if (!data.students || data.names.some(name => data.students[studentKeyFor(cls, name)] !== name)) throw appError('app/roster-unavailable', '学生名单尚未完成设置 / Senarai belum disediakan.');
+                rosterStudents = data.students;
                 rosterNames = [...data.names];
                 rosterClass = cls;
-                setNamePlaceholder('请选择自己的姓名 / Pilih nama sendiri');
-                for (const name of rosterNames) {
-                    const option = document.createElement('option');
-                    option.value = name;
-                    option.textContent = name;
-                    DOM.studentName.appendChild(option);
-                }
-                DOM.studentName.disabled = false;
-                setRosterStatus(`本班共 ${rosterNames.length} 名学生，请选择自己的姓名。\n${rosterNames.length} murid dalam kelas ini. Sila pilih nama sendiri.`);
-                updateRosterSelection();
+                refreshAvailableNames();
             } catch (error) {
                 if (epoch !== rosterEpoch || (sessionUser && auth?.currentUser?.uid !== sessionUser.uid)) return;
                 if (error.code === 'app/delima-required') {
@@ -1110,6 +1243,253 @@ body > main:has(#view-login:not(.hidden)) {
             }
         }
 
+        let registrationControl = null;
+        let eligibilityPolicies = null;
+        let claimedStudents = new Map();
+        let claimsReady = false;
+        let unsubscribeClaims = null;
+        let unsubscribeEligibility = null;
+        let unsubscribeControl = null;
+        let countdownInterval = null;
+        let previousRegistrationPhase = null;
+        let rosterStudents = {};
+        let submissionInProgress = false;
+
+        function appError(code, message) { return Object.assign(new Error(message), { code }); }
+
+        function canRegister() {
+            return registrationPhase(registrationControl) === 'open' && claimsReady && validEligibilityPolicies(eligibilityPolicies);
+        }
+
+        function requireRegistrationOpen() {
+            if (registrationPhase(registrationControl) !== 'open') throw appError('app/registration-closed', '报名尚未开放或已经关闭，请查看页面的开放时间。\nPendaftaran belum dibuka atau telah ditutup. Sila semak masa pada halaman.');
+            if (!claimsReady || !validEligibilityPolicies(eligibilityPolicies)) throw appError('app/setup-required', '报名资料尚未读取完成，请稍候或刷新重试。\nMaklumat pendaftaran belum tersedia. Sila tunggu atau muat semula.');
+        }
+
+        function updateRegistrationDisplay() {
+            const phase = registrationPhase(registrationControl);
+            const labels = {
+                setup: ['正在准备报名 / Menyediakan Pendaftaran', '请稍候或联系老师。 / Sila tunggu atau hubungi guru.'],
+                maintenance: ['报名准备中 / Pendaftaran Sedang Disediakan', '学生名单及报名检查尚未完成，请稍候。 / Semakan senarai dan pendaftaran belum selesai.'],
+                upcoming: ['距离报名开放 / Pendaftaran Akan Dibuka', registrationControl ? `${malaysiaDateTime(registrationControl.startsAt)} (MYT / 马来西亚时间)` : ''],
+                open: ['报名已开放 / Pendaftaran Dibuka', '请核对学生资料后开始选课。 / Semak maklumat murid sebelum membuat pilihan.'],
+                closed: ['报名已关闭 / Pendaftaran Ditutup', '如需协助，请联系老师。 / Sila hubungi guru untuk bantuan.']
+            };
+            const [title, detail] = labels[phase];
+            const titleNode = document.getElementById('registration-status-title');
+            const detailNode = document.getElementById('registration-status-detail');
+            if (titleNode.textContent !== title) titleNode.textContent = title;
+            if (detailNode.textContent !== detail) detailNode.textContent = detail;
+            document.getElementById('registration-notice').dataset.phase = phase;
+            const wizardNotice = document.getElementById('wizard-registration-notice');
+            const wizardText = title + (phase === 'upcoming' ? ' · ' + detail : '');
+            if (wizardNotice.textContent !== wizardText) wizardNotice.textContent = wizardText;
+            const target = phase === 'upcoming' ? registrationControl.startsAt :
+                phase === 'open' && registrationControl?.mode === 'scheduled' ? registrationControl.endsAt : 0;
+            const displayCountdown = Boolean(registrationControl?.showCountdown && target > 0 && ['upcoming', 'open'].includes(phase));
+            document.getElementById('registration-countdown').classList.toggle('hidden', !displayCountdown);
+            if (displayCountdown) {
+                let seconds = Math.max(0, Math.ceil((target - Date.now()) / 1000));
+                const parts = [Math.floor(seconds / 86400), Math.floor(seconds / 3600) % 24, Math.floor(seconds / 60) % 60, seconds % 60];
+                ['days','hours','minutes','seconds'].forEach((part, index) => {
+                    document.getElementById('countdown-' + part).textContent = String(parts[index]).padStart(2, '0');
+                });
+                document.getElementById('countdown-caption').textContent = phase === 'open' ? '距离报名结束 / Masa Sebelum Ditutup' : '距离报名开放 / Masa Sebelum Dibuka';
+            }
+            updateRosterSelection();
+            if (phase !== previousRegistrationPhase && STATE.step >= 1 && STATE.step <= 4 && !submissionInProgress) renderCurrentStep();
+            previousRegistrationPhase = phase;
+        }
+
+        function startRegistrationClock() {
+            if (unsubscribeControl) unsubscribeControl();
+            if (countdownInterval) clearInterval(countdownInterval);
+            unsubscribeControl = onSnapshot(doc(db, 'public_settings', 'registration'), snapshot => {
+                registrationControl = snapshot.exists() && validRegistrationControl(snapshot.data()) ? snapshot.data() : null;
+                updateRegistrationDisplay();
+            }, error => {
+                console.error('Registration settings unavailable:', error);
+                registrationControl = null;
+                updateRegistrationDisplay();
+            });
+            countdownInterval = setInterval(updateRegistrationDisplay, 1000);
+            updateRegistrationDisplay();
+        }
+
+        function stopStudentSubscriptions() {
+            if (unsubscribeClaims) unsubscribeClaims();
+            if (unsubscribeEligibility) unsubscribeEligibility();
+            unsubscribeClaims = null;
+            unsubscribeEligibility = null;
+            claimedStudents = new Map();
+            claimsReady = false;
+            eligibilityPolicies = null;
+            rosterStudents = {};
+            submissionInProgress = false;
+        }
+
+        function startStudentSubscriptions(uid) {
+            const active = () => STATE.userId === uid && isDelimaUser(auth?.currentUser) && auth.currentUser.uid === uid;
+            unsubscribeClaims = onSnapshot(collection(db, 'student_claims'), { includeMetadataChanges: true }, snapshot => {
+                if (!active() || snapshot.metadata?.hasPendingWrites || snapshot.metadata?.fromCache) return;
+                const next = new Map();
+                snapshot.forEach(item => next.set(item.id, item.data().ownerUid));
+                claimedStudents = next;
+                claimsReady = true;
+                const info = STATE.studentInfo;
+                if (!submissionInProgress && STATE.step > 0 && STATE.step < 5 && info?.studentKey &&
+                    next.has(info.studentKey) && next.get(info.studentKey) !== uid) {
+                    showLoginView(false);
+                    refreshAvailableNames();
+                    setRosterStatus('所选学生刚刚完成报名，请确认姓名；如有误请联系老师。\nMurid yang dipilih telah didaftarkan. Sila semak nama atau hubungi guru.', true);
+                } else refreshAvailableNames();
+                updateRosterSelection();
+            }, error => {
+                if (!active()) return;
+                console.error('Registration index unavailable:', error);
+                claimsReady = false;
+                setRosterStatus('无法读取可报名名单，请刷新或联系老师。\nGagal membaca senarai. Sila muat semula atau hubungi guru.', true);
+                updateRosterSelection();
+            });
+            unsubscribeEligibility = onSnapshot(doc(db, 'club_settings', 'eligibility'), snapshot => {
+                if (!active()) return;
+                const policies = snapshot.exists() ? snapshot.data().clubs : null;
+                eligibilityPolicies = validEligibilityPolicies(policies) ? policies : null;
+                clearIneligibleSelections();
+                updateRosterSelection();
+                if (STATE.step >= 1 && STATE.step <= 4 && !submissionInProgress) renderCurrentStep();
+            }, error => {
+                if (!active()) return;
+                console.error('Eligibility settings unavailable:', error);
+                eligibilityPolicies = null;
+                updateRosterSelection();
+            });
+        }
+
+        function refreshAvailableNames() {
+            if (!rosterClass || rosterClass !== DOM.studentClass.value) return;
+            const previous = DOM.studentName.value;
+            const available = rosterNames.filter(name => {
+                const key = studentKeyFor(rosterClass, name);
+                return rosterStudents[key] === name && !claimedStudents.has(key);
+            });
+            setNamePlaceholder(available.length ? '请选择自己的姓名 / Pilih nama sendiri' : '本班学生已完成报名 / Semua murid telah didaftarkan');
+            for (const name of available) {
+                const option = document.createElement('option');
+                option.value = name;
+                option.textContent = name;
+                DOM.studentName.appendChild(option);
+            }
+            if (available.includes(previous)) DOM.studentName.value = previous;
+            DOM.studentName.disabled = !claimsReady || available.length === 0;
+            setRosterStatus(claimsReady
+                ? `本班尚有 ${available.length} 名学生可报名。已报名学生不会显示。\n${available.length} murid belum berdaftar. Nama yang telah didaftarkan tidak dipaparkan.`
+                : '正在检查已报名学生… / Menyemak murid yang telah berdaftar…');
+            updateRosterSelection();
+        }
+
+        function clearIneligibleSelections() {
+            if (!STATE.studentInfo || STATE.step === 5) return;
+            [1,2,3].forEach(step => {
+                const key = `step${step}`;
+                if (STATE.selections[key] && !policyAllows(eligibilityPolicies?.[STATE.selections[key]], STATE.studentInfo)) STATE.selections[key] = null;
+            });
+        }
+
+        function currentProfile() {
+            const info = selectedRosterStudent();
+            info.gender = document.getElementById('input-student-gender').value;
+            info.role = document.getElementById('input-student-role').value;
+            if (!STUDENT_GENDERS.includes(info.gender) || !STUDENT_ROLES.includes(info.role)) {
+                throw appError('app/profile-required', '请选择学生性别和职位；没有担任职位请选择“无”。\nSila pilih jantina dan jawatan. Pilih “Tiada” jika tiada jawatan.');
+            }
+            return info;
+        }
+
+        async function submitControlledRegistration() {
+            if (submissionInProgress) return;
+            submissionInProgress = true;
+            DOM.btnNextText.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 提交中 / Menghantar…';
+            DOM.btnNext.disabled = true;
+            DOM.btnPrev.disabled = true;
+            let sessionUser;
+            try {
+                sessionUser = requireDelimaSession();
+                const previous = await getDocFromServer(doc(db, 'club_registrations', sessionUser.uid));
+                requireDelimaSession(sessionUser.uid);
+                if (previous.exists() && previous.data().submitted) {
+                    STATE.studentInfo = previous.data().studentInfo;
+                    STATE.selections = previous.data().selections;
+                    showStep(5);
+                    return;
+                }
+                const info = { ...STATE.studentInfo };
+                const selections = { ...STATE.selections };
+                requireRegistrationOpen();
+                await fetchClubCapacities();
+                requireDelimaSession(sessionUser.uid);
+                const fullClubs = [selections.step1, selections.step2, selections.step3].filter(id => {
+                    const club = CLUBS_DATA.find(item => item.id === id);
+                    return !club || STATE.clubCounts[id] >= club.capacity;
+                });
+                if (fullClubs.length) throw appError('app/club-full', '所选活动刚刚满额，请重新选择。\nAktiviti yang dipilih telah penuh. Sila pilih semula.');
+                const result = await runTransaction(db, async transaction => {
+                    requireDelimaSession(sessionUser.uid);
+                    const regRef = doc(db, 'club_registrations', sessionUser.uid);
+                    const existing = await transaction.get(regRef);
+                    if (existing.exists()) {
+                        if (existing.data().submitted) return { existing: existing.data() };
+                        throw appError('app/registration-exists', '账号已有资料，请联系老师。\nAkaun ini mempunyai rekod. Sila hubungi guru.');
+                    }
+                    const claimRef = doc(db, 'student_claims', info.studentKey || 'invalid');
+                    const [claim, control, policies, roster] = await Promise.all([
+                        transaction.get(claimRef),
+                        transaction.get(doc(db, 'public_settings', 'registration')),
+                        transaction.get(doc(db, 'club_settings', 'eligibility')),
+                        transaction.get(doc(db, 'student_rosters', info.cls || 'invalid'))
+                    ]);
+                    requireDelimaSession(sessionUser.uid);
+                    if (claim.exists()) throw appError('app/student-claimed', '该学生已完成报名，不能重复提交。如选错姓名，请联系老师。\nMurid ini telah didaftarkan. Sila hubungi guru jika nama tersalah dipilih.');
+                    if (!control.exists() || registrationPhase(control.data()) !== 'open') throw appError('app/registration-closed', '报名尚未开放或已经关闭。\nPendaftaran belum dibuka atau telah ditutup.');
+                    if (!roster.exists() || roster.data().students?.[info.studentKey] !== info.name ||
+                        !STUDENT_GENDERS.includes(info.gender) || !STUDENT_ROLES.includes(info.role)) {
+                        throw appError('app/profile-required', '学生资料无效，请返回重新选择。\nMaklumat murid tidak sah. Sila pilih semula.');
+                    }
+                    const freshPolicies = policies.exists() ? policies.data().clubs : null;
+                    if (!validEligibilityPolicies(freshPolicies) || ![selections.step1,selections.step2,selections.step3].every(id => policyAllows(freshPolicies[id], info))) {
+                        throw appError('app/ineligible', '所选活动的资格设置已更新，请重新选择符合条件的活动。\nSyarat aktiviti telah dikemas kini. Sila pilih aktiviti yang layak.');
+                    }
+                    const data = { studentInfo: info, parentEmail: sessionUser.email, selections, submitted: true, timestamp: new Date().toISOString() };
+                    transaction.set(regRef, data);
+                    transaction.set(doc(db, 'club_enrollments', sessionUser.uid), { selections });
+                    transaction.set(claimRef, { ownerUid: sessionUser.uid });
+                    return { saved: data };
+                });
+                requireDelimaSession(sessionUser.uid);
+                const stored = result.existing || result.saved;
+                STATE.studentInfo = stored.studentInfo;
+                STATE.selections = stored.selections;
+                showStep(5);
+            } catch (error) {
+                console.error('Registration failed:', error);
+                if (sessionUser && auth?.currentUser?.uid !== sessionUser.uid) return;
+                if (error.code === 'app/delima-required') { resetSessionState(); alert(DELIMA_LOGIN_MESSAGE); return; }
+                alert(error.code?.startsWith('app/') ? error.message : '报名未能提交，请检查网络并确认报名仍然开放。\nPendaftaran tidak berjaya. Semak rangkaian dan status pendaftaran.');
+                if (error.code === 'app/student-claimed' || error.code === 'app/profile-required') {
+                    showLoginView(false);
+                    await loadSelectedClassRoster();
+                } else if (error.code === 'app/club-full' || error.code === 'app/ineligible') {
+                    clearIneligibleSelections();
+                    showStep(1);
+                }
+            } finally {
+                submissionInProgress = false;
+                DOM.btnPrev.disabled = false;
+                if (STATE.step >= 1 && STATE.step <= 4) renderCurrentStep();
+                updateRosterSelection();
+            }
+        }
+
         function setupStaticText() {
             document.getElementById('google-login-text').innerHTML = I18N.googleLogin;
             document.getElementById('label-student-name').innerHTML = I18N.studentName;
@@ -1119,6 +1499,7 @@ body > main:has(#view-login:not(.hidden)) {
             DOM.btnPrevText.innerHTML = I18N.btnBack;
             DOM.successTitle.innerHTML = I18N.successTitle;
             DOM.successDesc.innerHTML = I18N.successDesc;
+            updateRosterSelection();
             
             for(let i=1; i<=4; i++) {
                 document.getElementById(`step-label-${i}`).innerHTML = I18N[`step${i}Title`];
@@ -1132,6 +1513,7 @@ body > main:has(#view-login:not(.hidden)) {
                 auth = getAuth(app);
                 googleProvider = new GoogleAuthProvider();
                 googleProvider.setCustomParameters({ prompt: 'select_account', hd: DELIMA_DOMAIN });
+                startRegistrationClock();
 
                 onAuthStateChanged(auth, async (user) => {
                     resetSessionState();
@@ -1149,6 +1531,7 @@ body > main:has(#view-login:not(.hidden)) {
                         STATE.userId = user.uid;
                         STATE.parentEmail = user.email;
                         DOM.btnLogout.classList.remove('hidden');
+                        startStudentSubscriptions(user.uid);
                         await loadUserData();
                     }
                 });
@@ -1227,7 +1610,7 @@ body > main:has(#view-login:not(.hidden)) {
             try {
                 sessionUser = requireDelimaSession();
                 const docRef = doc(db, 'club_registrations', sessionUser.uid);
-                const docSnap = await getDoc(docRef);
+                const docSnap = await getDocFromServer(docRef);
                 requireDelimaSession(sessionUser.uid);
                 if (docSnap.exists()) {
                     const data = docSnap.data();
@@ -1275,11 +1658,15 @@ body > main:has(#view-login:not(.hidden)) {
             let sessionUser;
             try {
                 sessionUser = requireDelimaSession();
-                STATE.studentInfo = selectedRosterStudent();
+                requireRegistrationOpen();
+                STATE.studentInfo = currentProfile();
+                clearIneligibleSelections();
                 submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> 读取最新名额 / Menyemak kekosongan...`;
                 submitBtn.disabled = true;
                 DOM.studentClass.disabled = true;
                 DOM.studentName.disabled = true;
+                document.getElementById('input-student-gender').disabled = true;
+                document.getElementById('input-student-role').disabled = true;
                 await fetchClubCapacities();
                 requireDelimaSession(sessionUser.uid);
                 showStep(1);
@@ -1288,12 +1675,14 @@ body > main:has(#view-login:not(.hidden)) {
                 if (sessionUser && auth?.currentUser?.uid !== sessionUser.uid) return;
                 if (error.code === 'app/delima-required') resetSessionState();
                 alert(error.code === 'app/delima-required' ? DELIMA_LOGIN_MESSAGE :
-                    error.code === 'app/roster-selection' ? error.message :
+                    error.code?.startsWith('app/') ? error.message :
                     '读取最新名额失败，请检查网络后重试。\nGagal menyemak kekosongan. Sila cuba lagi.');
             } finally {
                 submitBtn.innerHTML = originalContent;
                 DOM.studentClass.disabled = false;
-                DOM.studentName.disabled = !rosterNames.length;
+                refreshAvailableNames();
+                document.getElementById('input-student-gender').disabled = false;
+                document.getElementById('input-student-role').disabled = false;
                 updateRosterSelection();
             }
         }
@@ -1377,7 +1766,9 @@ body > main:has(#view-login:not(.hidden)) {
                 DOM.wizardDesc.innerHTML = I18N.summaryDesc;
                 DOM.btnNextText.innerHTML = I18N.btnSubmit;
                 renderSummary();
-                DOM.btnNext.disabled = false;
+                const allChoicesEligible = [1,2,3].every(step => policyAllows(eligibilityPolicies?.[STATE.selections[`step${step}`]], STATE.studentInfo));
+                DOM.btnNext.disabled = !canRegister() || !allChoicesEligible;
+                if (!allChoicesEligible) DOM.wizardDesc.textContent = '活动资格条件已更新，请按“上一步”重新选择。 / Syarat aktiviti telah berubah. Sila kembali dan pilih semula.';
             } else if (STATE.step === 5) {
                 DOM.successContainer.classList.remove('hidden');
                 DOM.wizardTitle.parentElement.classList.add('hidden');
@@ -1398,12 +1789,13 @@ body > main:has(#view-login:not(.hidden)) {
                 const currentEnrolled = STATE.clubCounts[club.id] || 0;
                 const isFull = currentEnrolled >= club.capacity;
                 const isChecked = selectedId === club.id;
+                const eligible = policyAllows(eligibilityPolicies?.[club.id], STATE.studentInfo);
                 const card = document.createElement('div');
                 card.className = "relative";
                 
                 card.innerHTML = `
                     <input type="radio" name="club-selection" id="${club.id}" value="${club.id}" 
-                           class="club-card-input peer sr-only" ${isFull && !isChecked ? 'disabled' : ''} ${isChecked ? 'checked' : ''}>
+                           class="club-card-input peer sr-only" ${((isFull && !isChecked) || !eligible || !canRegister()) ? 'disabled' : ''} ${isChecked ? 'checked' : ''}>
                     <label for="${club.id}" class="club-card-label flex p-4 cursor-pointer bg-white border border-gray-200 rounded-xl transition-all h-full hover:border-brand-400 hover:shadow-md">
                         <div class="flex-shrink-0 mr-4 mt-1">
                             <div class="w-14 h-14 rounded-full ${club.color} flex items-center justify-center text-2xl shadow-sm border">
@@ -1421,6 +1813,7 @@ body > main:has(#view-login:not(.hidden)) {
                                 </div>
                             </div>
                             
+                            <div class="eligibility-note ${eligible ? '' : 'denied'}">${eligible ? '' : '不符合资格 / Tidak layak · '}${escapeHtml(policyDescription(eligibilityPolicies?.[club.id]))}</div>
                             ${club.desc_zh ? `<div class="text-xs text-orange-700 font-bold mt-2 bg-orange-50 px-2 py-1 rounded inline-block border border-orange-100">${club.desc_zh}<br>${club.desc_ms}</div>` : ''}
                             
                             <div class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold mt-2.5 shadow-sm ${isFull ? 'bg-red-50 text-red-600 border border-red-200' : 'bg-gray-100 text-gray-700 border border-gray-200'}">
@@ -1436,7 +1829,7 @@ body > main:has(#view-login:not(.hidden)) {
             const inputs = document.querySelectorAll('input[name="club-selection"]');
             const checkNextState = () => {
                 const checked = document.querySelector('input[name="club-selection"]:checked');
-                DOM.btnNext.disabled = !checked;
+                DOM.btnNext.disabled = !checked || !canRegister();
                 if(checked) STATE.selections[stepKey] = checked.value;
             };
             inputs.forEach(input => input.addEventListener('change', checkNextState));
@@ -1446,7 +1839,7 @@ body > main:has(#view-login:not(.hidden)) {
         function renderSummary() {
             DOM.summaryList.innerHTML = `
                 <div class="roster-review">
-                    <div><span>学生资料 / Maklumat Murid</span><strong>${escapeHtml(STATE.studentInfo.cls)}</strong><strong>${escapeHtml(STATE.studentInfo.name)}</strong></div>
+                    <div><span>学生资料 / Maklumat Murid</span><strong>${escapeHtml(STATE.studentInfo.cls)}</strong><strong>${escapeHtml(STATE.studentInfo.name)}</strong><strong>${escapeHtml(GENDER_LABELS[STATE.studentInfo.gender] || '未填写 / Tiada')}</strong><strong>${escapeHtml(ROLE_LABELS[STATE.studentInfo.role] || '未填写 / Tiada')}</strong></div>
                     <button type="button" data-edit-profile>更改姓名或班级<br>Tukar Nama / Kelas</button>
                 </div>`;
             const cats = ['uniform', 'society', 'sports'];
@@ -1488,6 +1881,8 @@ body > main:has(#view-login:not(.hidden)) {
                     <span class="text-gray-500 text-sm">班级<br><span class="uppercase mt-0.5 block">Kelas</span></span>
                     <span class="font-bold text-gray-900 text-lg uppercase">${escapeHtml(STATE.studentInfo.cls)}</span>
                 </div>
+                <div class="py-3 border-b border-gray-200 text-sm"><span>性别 / Jantina</span><strong class="block mt-1">${escapeHtml(GENDER_LABELS[STATE.studentInfo.gender] || '旧报名未填写 / Rekod lama')}</strong></div>
+                <div class="py-3 border-b border-gray-200 text-sm"><span>职位 / Jawatan</span><strong class="block mt-1">${escapeHtml(ROLE_LABELS[STATE.studentInfo.role] || '旧报名未填写 / Rekod lama')}</strong></div>
                 <div class="pt-2">
                     <span class="text-xs text-brand-600 font-bold tracking-widest uppercase mb-3 block border-b border-brand-100 pb-2">Selections / 已选</span>
                     ${[1,2,3].map(i => {
@@ -1498,84 +1893,15 @@ body > main:has(#view-login:not(.hidden)) {
             `;
         }
 
-        async function submitData() {
-            DOM.btnNextText.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> 提交中 / Menghantar...`;
-            DOM.btnNext.disabled = true;
-            DOM.btnPrev.disabled = true;
-            let sessionUser;
-            try {
-                sessionUser = requireDelimaSession();
-                const docRef = doc(db, 'club_registrations', sessionUser.uid);
-                const existingRecord = await getDoc(docRef);
-                requireDelimaSession(sessionUser.uid);
-                if (existingRecord.exists()) {
-                    const existingData = existingRecord.data();
-                    if (!existingData.submitted) {
-                        const error = new Error('账号已有报名资料，请联系老师处理。\nAkaun ini mempunyai rekod. Sila hubungi guru.');
-                        error.code = 'app/registration-exists';
-                        throw error;
-                    }
-                    STATE.studentInfo = existingData.studentInfo;
-                    STATE.selections = existingData.selections;
-                    showStep(5);
-                    return;
-                }
-                // 提交前再次验证真实登录状态及最新名额。
-                await fetchClubCapacities();
-                requireDelimaSession(sessionUser.uid);
-                let overbooked = false;
-                let overbookedMsg = "";
-                [1, 2, 3].forEach(stepNum => {
-                    const clubId = STATE.selections[`step${stepNum}`];
-                    const club = CLUBS_DATA.find(c => c.id === clubId);
-                    if (club && STATE.clubCounts[clubId] >= club.capacity) {
-                        overbooked = true;
-                        overbookedMsg += `[${club.name_zh}] `;
-                    }
-                });
-
-                if (overbooked) {
-                    alert(`抱歉！您选择的社团 ${overbookedMsg} 刚刚满额了。\nMaaf! Kelab pilihan anda telah penuh.\n\n系统将返回让您重新选择。`);
-                    DOM.btnNextText.innerHTML = I18N.btnNext;
-                    DOM.btnNext.disabled = false;
-                    DOM.btnPrev.disabled = false;
-                    showStep(1);
-                    return;
-                }
-
-                const selections = { ...STATE.selections };
-                const batch = writeBatch(db);
-                batch.set(docRef, {
-                    studentInfo: STATE.studentInfo,
-                    parentEmail: sessionUser.email,
-                    selections,
-                    submitted: true,
-                    timestamp: new Date().toISOString()
-                });
-                batch.set(doc(db, 'club_enrollments', sessionUser.uid), { selections });
-                await batch.commit();
-                requireDelimaSession(sessionUser.uid);
-                showStep(5); // 仅在真实写入成功后显示成功页面。
-            } catch (err) {
-                console.error(err);
-                if (sessionUser && auth?.currentUser?.uid !== sessionUser.uid) return;
-                if (err.code === 'app/delima-required') {
-                    resetSessionState();
-                    alert(DELIMA_LOGIN_MESSAGE);
-                    return;
-                }
-                alert(err.code === 'app/registration-exists' ? err.message : "读取或保存资料失败，请检查网络后重试。\nGagal memuatkan atau menyimpan data. Sila cuba lagi.");
-                DOM.btnNextText.innerHTML = I18N.btnSubmit;
-                DOM.btnNext.disabled = false;
-                DOM.btnPrev.disabled = false;
-            }
-        }
+        async function submitData() { return submitControlledRegistration(); }
 
         // Event Listeners
         DOM.btnGoogleLogin.addEventListener('click', handleGoogleLogin);
         DOM.studentForm.addEventListener('submit', handleStudentSubmit);
         DOM.studentClass.addEventListener('change', loadSelectedClassRoster);
         DOM.studentName.addEventListener('change', updateRosterSelection);
+        document.getElementById('input-student-gender').addEventListener('change', updateRosterSelection);
+        document.getElementById('input-student-role').addEventListener('change', updateRosterSelection);
         DOM.rosterRetry.addEventListener('click', loadSelectedClassRoster);
         DOM.summaryList.addEventListener('click', event => {
             if (event.target.closest('[data-edit-profile]')) showStep(0);
@@ -1587,6 +1913,7 @@ body > main:has(#view-login:not(.hidden)) {
         });
         
         DOM.btnNext.addEventListener('click', () => {
+            if (!canRegister()) { alert('报名尚未开放或已关闭，请查看开放时间。\nPendaftaran belum dibuka atau telah ditutup.'); return; }
             if (STATE.step < 4) {
                 showStep(STATE.step + 1);
             } else if (STATE.step === 4) {

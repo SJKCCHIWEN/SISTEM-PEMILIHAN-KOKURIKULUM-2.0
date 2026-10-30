@@ -289,6 +289,54 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
 #admin-main>div:last-child{min-height:240px;flex-shrink:0}
 @media(max-width:600px){.roster-import-actions{align-items:stretch;flex-direction:column}#btn-import-roster{align-self:flex-start}}
 </style>
+
+<style id="registration-controls-styles">
+/* Registration controls: timing, eligibility and student identity fields. */
+#registration-notice{border:1px solid #e0e8d9;border-radius:13px;margin:22px 30px 0;padding:13px 14px;background:#f5f8ef;text-align:center}
+#registration-status-title{font-size:13px;font-weight:750;line-height:1.6;color:#29543c}
+#registration-status-detail{font-size:11px;line-height:1.7;color:#65775e;margin-top:4px}
+#registration-notice[data-phase=closed],#registration-notice[data-phase=maintenance]{background:#fff7ed;border-color:#f0d8b2}
+#registration-notice[data-phase=closed] #registration-status-title,#registration-notice[data-phase=maintenance] #registration-status-title{color:#925f25}
+#registration-notice[data-phase=open]{background:#edf8ef;border-color:#bedcc1}
+#registration-countdown{margin-top:12px}
+#countdown-caption{font-size:10px;color:#6d7d61;margin-bottom:8px}
+.countdown-units{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.countdown-units>div{background:#fff;border:1px solid #dbe5cf;border-radius:9px;padding:8px 2px 7px}
+.countdown-units strong{display:block;font-size:23px;line-height:1.1;color:#235e49;font-variant-numeric:tabular-nums}
+.countdown-units span{display:block;font-size:9px;line-height:1.4;color:#738268;margin-top:5px}
+.profile-extra-grid{display:grid;grid-template-columns:1fr;gap:19px;margin-top:22px}
+.profile-extra-grid>div{min-width:0}
+#input-student-gender,#input-student-role{width:100%;min-height:52px;border:1px solid #d8e1d3;border-radius:12px;background:#f8faf4;color:#203e2e;font-size:14px;padding:12px}
+#input-student-role{font-size:12px}
+.eligibility-note{font-size:11px;line-height:1.65;margin-top:9px;color:#52734c;overflow-wrap:anywhere}
+.eligibility-note.denied{color:#a35b39}
+#wizard-registration-notice{font-size:12px;line-height:1.65;padding:12px 16px;margin-bottom:16px;border:1px solid #d5e2c9;border-radius:12px;color:#365d3d;background:#f4f8ec}
+#registration-management,#eligibility-management{flex-shrink:0;background:#fff;border:1px solid #cbded7;border-radius:15px;overflow:hidden;box-shadow:0 2px 10px #153f3210}
+#registration-management>summary,#eligibility-management>summary{font-size:14px;font-weight:750;color:#214f42;padding:14px 18px;cursor:pointer;background:#f3faf6}
+.admin-control-body{padding:16px 18px}
+.admin-control-body p{font-size:12px;line-height:1.7;color:#5c6e63;margin-bottom:12px}
+.registration-fields{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.registration-fields label,.admin-checkline{font-size:12px;font-weight:600;color:#335e4d;line-height:1.6}
+.registration-fields input,.registration-fields select,.eligibility-row select{display:block;width:100%;min-height:41px;font:inherit;font-size:12px;border:1px solid #cbdcd0;border-radius:9px;padding:8px 10px;margin-top:5px;background:#fbfdf9;color:#2c4a38}
+.admin-checkline{display:flex;align-items:center;gap:8px;margin-top:14px}
+.admin-checkline input{width:16px;height:16px;accent-color:#235e49}
+.admin-control-actions{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 12px}
+.admin-control-actions button,#btn-save-eligibility{border:1px solid #235e49;border-radius:9px;background:#235e49;color:#fff;font-size:12px;font-weight:700;padding:10px 15px}
+.admin-control-actions button.secondary{color:#235e49;background:#f6faf1;border-color:#b8d0b9}
+.admin-control-actions button:disabled,#btn-save-eligibility:disabled{opacity:.5;cursor:not-allowed}
+#registration-admin-status,#registration-index-status{white-space:pre-line;background:#f5f9f1;border:1px solid #e0e8d8;padding:12px 14px;border-radius:10px;font-size:12px;line-height:1.7;color:#36583e}
+#registration-index-status{margin-top:10px;max-height:170px;overflow:auto}
+#registration-index-status[data-error=true]{background:#fff8ef;border-color:#efd8b9;color:#8e5e2b}
+#eligibility-rows{max-height:520px;overflow:auto;margin:15px 0}
+#eligibility-rows h4{font-size:13px;font-weight:750;color:#235e49;background:#eef5e8;padding:12px;margin-top:16px;border-radius:8px}
+.eligibility-row{display:grid;grid-template-columns:minmax(220px,1.2fr) minmax(130px,.55fr) minmax(140px,.65fr) minmax(240px,1fr);align-items:center;gap:12px;padding:14px 5px;border-bottom:1px solid #e7eddf}
+.eligibility-club-name{font-size:12px;font-weight:650;line-height:1.6;color:#33513b}
+.eligibility-row label{font-size:10px;color:#6d806b}
+#eligibility-editor-status{font-size:12px;color:#436a3e;margin-top:9px}
+.admin-profile-cell{max-width:280px;white-space:normal;line-height:1.6;font-size:11px;color:#5b6f5b}
+@media(max-width:900px){.registration-fields{grid-template-columns:1fr}.eligibility-row{grid-template-columns:1fr 1fr}.eligibility-club-name{grid-column:1/-1}}
+@media(max-width:640px){#registration-notice{margin:18px 22px 0}.countdown-units strong{font-size:21px}.admin-control-body{padding:14px}.eligibility-row{grid-template-columns:1fr}.eligibility-club-name{grid-column:auto}}
+</style>
 </head>
 <body class="text-slate-800 antialiased h-screen flex flex-col overflow-hidden">
 
@@ -371,7 +419,34 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
             </div>
         </div>
 
-        <details id="roster-management" open>
+        <details id="registration-management" open>
+            <summary>报名时间与开放状态 / Masa dan Status Pendaftaran</summary>
+            <div class="admin-control-body">
+                <p>全部时间以马来西亚时间（MYT / UTC+8）为准。手动开放会立即允许报名；自动模式按设定时间执行。<br>Semua masa mengikut waktu Malaysia. Mod manual membuka pendaftaran serta-merta; mod automatik mengikut jadual.</p>
+                <form id="registration-settings-form">
+                    <div class="registration-fields">
+                        <label for="registration-mode">开放方式 / Mod<select id="registration-mode"><option value="scheduled">按日期时间自动开放 / Automatik</option><option value="open">手动开放（立即）/ Buka Sekarang</option><option value="closed">手动关闭 / Tutup Sekarang</option></select></label>
+                        <label for="registration-start">开放时间 / Masa Buka<input id="registration-start" type="datetime-local" required value="2026-10-31T10:00"></label>
+                        <label for="registration-end">关闭时间（可留空）/ Masa Tutup<input id="registration-end" type="datetime-local"></label>
+                    </div>
+                    <label class="admin-checkline"><input id="registration-show-countdown" type="checkbox" checked>在报名网站显示倒数计时 / Paparkan kiraan detik</label>
+                    <p>关闭时间留空：不会自动关闭，可由你手动关闭。 / Jika masa tutup kosong, pendaftaran ditutup secara manual.</p>
+                    <div class="admin-control-actions"><button id="btn-save-registration" type="submit" disabled>保存时间与状态 / Simpan Masa dan Status</button><button id="btn-recheck-index" type="button" class="secondary" disabled>重新核对姓名及报名 / Semak Semula Nama</button></div>
+                </form>
+                <div id="registration-admin-status" role="status" aria-live="polite"></div>
+                <div id="registration-index-status" role="status" aria-live="polite"></div>
+            </div>
+        </details>
+        <details id="eligibility-management">
+            <summary>活动资格条件 / Syarat Kelayakan Aktiviti</summary>
+            <div class="admin-control-body">
+                <p>每项活动可设为不限、限制性别、限制职位或同时限制两项。性别和职位条件须同时符合。职位为学生或家长填写的单选资料。<br>Tetapkan jantina dan jawatan bagi setiap aktiviti. Kedua-dua syarat mesti dipenuhi. Jawatan diisi oleh murid atau ibu bapa.</p>
+                <p>职位说明：PSS = 图书管理员；PRS = 辅导小尖兵；TIADA = 无。未设置限制的活动默认为不限。 / Aktiviti tanpa syarat terbuka kepada semua.</p>
+                <form id="eligibility-form"><div id="eligibility-rows"></div><button id="btn-save-eligibility" type="submit" disabled>保存全部活动资格 / Simpan Semua Syarat</button><div id="eligibility-editor-status" role="status" aria-live="polite"></div></form>
+            </div>
+        </details>
+
+        <details id="roster-management">
             <summary>学生姓名名单 / Senarai Nama Murid</summary>
             <div class="roster-import-body">
                 <p>导入后，家长登录 DELIMa 即可按班级选择学生姓名。更新名单会保留既有报名资料。<br>Selepas import, ibu bapa boleh memilih nama mengikut kelas. Rekod pendaftaran sedia ada dikekalkan.</p>
@@ -403,6 +478,8 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
                                 <div>学生姓名</div>
                                 <div class="font-normal text-slate-400 mt-0.5">Nama Pelajar</div>
                             </th>
+                            <th class="p-4 border-b border-slate-200"><div>性别</div><div class="font-normal text-slate-400 mt-0.5">Jantina</div></th>
+                            <th class="p-4 border-b border-slate-200"><div>职位</div><div class="font-normal text-slate-400 mt-0.5">Jawatan</div></th>
                             <th class="p-4 border-b border-slate-200 text-red-700">
                                 <div>制服团体</div>
                                 <div class="font-normal text-red-400 mt-0.5">Unit Beruniform</div>
@@ -454,7 +531,7 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
             <h3 class="text-lg font-bold text-slate-900 mb-1">确定要删除此记录吗？</h3>
             <h3 class="text-sm font-bold text-slate-700 mb-2">Adakah anda pasti untuk memadam?</h3>
             
-            <p class="text-slate-500 text-xs mb-6">删除后，该名额将被立即释放，且学生可以重新登入选课。此操作无法撤销。<br><br>Tindakan ini tidak boleh dibatalkan. Kuota akan dilepaskan serta-merta.</p>
+            <p class="text-slate-500 text-xs mb-6">删除后，该姓名和名额将被释放，学生姓名会重新出现在可报名名单中。此操作无法撤销。<br><br>Tindakan ini tidak boleh dibatalkan. Kuota akan dilepaskan serta-merta.</p>
             
             <div class="flex gap-3">
                 <button id="btn-cancel-delete" class="flex-1 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition-colors">
@@ -491,7 +568,7 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, onSnapshot, doc, getDoc, getDocs, setDoc, writeBatch } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, onSnapshot, doc, getDoc, getDocFromServer, getDocs, getDocsFromServer, setDoc, writeBatch, runTransaction } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Firebase 配置 (Do not change)
         const firebaseConfig = {
@@ -578,6 +655,73 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
             '学会 / Kelab & Persatuan': ['s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s11','s12','s13','s14','s15','s16'],
             '运动与游戏 / Sukan & Permainan': ['sp1','sp2','sp3','sp4','sp5','sp6','sp7','sp8','sp9','sp10','sp11','sp12','sp13','sp14']
         };
+
+        const ALL_CLUB_IDS = ['u1','u2','u3','u4','u5','s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s11','s12','s13','s14','s15','s16','sp1','sp2','sp3','sp4','sp5','sp6','sp7','sp8','sp9','sp10','sp11','sp12','sp13','sp14'];
+        const STUDENT_GENDERS = ['LELAKI', 'PEREMPUAN'];
+        const STUDENT_ROLES = ['NONE', 'PSS', 'PRS'];
+        const GENDER_LABELS = { LELAKI: '男 / LELAKI', PEREMPUAN: '女 / PEREMPUAN' };
+        const ROLE_LABELS = { NONE: '无 / TIADA', PSS: '图书管理员 / PENGAWAS PUSAT SUMBER SEKOLAH', PRS: '辅导小尖兵 / PEMBIMBING RAKAN SEBAYA' };
+        const DEFAULT_OPENING_MS = Date.parse('2026-10-31T10:00:00+08:00');
+
+        function studentKeyFor(cls, name) {
+            return cls.replace(/ /g, '_') + '-' + Array.from(name, ch => ch.codePointAt(0).toString(16).padStart(6, '0')).join('');
+        }
+
+        function defaultRegistrationControl() {
+            return { mode: 'scheduled', startsAt: DEFAULT_OPENING_MS, endsAt: 0, ready: false, showCountdown: true, updatedAt: new Date().toISOString() };
+        }
+
+        function validRegistrationControl(data) {
+            return Boolean(data && ['scheduled', 'open', 'closed'].includes(data.mode) &&
+                Number.isSafeInteger(data.startsAt) && data.startsAt > 0 &&
+                Number.isSafeInteger(data.endsAt) && data.endsAt >= 0 &&
+                (data.endsAt === 0 || data.endsAt > data.startsAt) && typeof data.ready === 'boolean' && typeof data.showCountdown === 'boolean');
+        }
+
+        function registrationPhase(data, now = Date.now()) {
+            if (!validRegistrationControl(data)) return 'setup';
+            if (!data.ready) return 'maintenance';
+            if (data.mode === 'closed') return 'closed';
+            if (data.mode === 'open') return 'open';
+            if (now < data.startsAt) return 'upcoming';
+            if (data.endsAt > 0 && now >= data.endsAt) return 'closed';
+            return 'open';
+        }
+
+        function defaultEligibilityPolicies() {
+            return Object.fromEntries(ALL_CLUB_IDS.map(id => [id, { enabled: true, genders: [...STUDENT_GENDERS], roles: [...STUDENT_ROLES] }]));
+        }
+
+        function validClubPolicy(policy) {
+            return Boolean(policy && typeof policy.enabled === 'boolean' &&
+                Array.isArray(policy.genders) && policy.genders.length > 0 && policy.genders.length <= 2 &&
+                policy.genders.every(value => STUDENT_GENDERS.includes(value)) && new Set(policy.genders).size === policy.genders.length &&
+                Array.isArray(policy.roles) && policy.roles.length > 0 && policy.roles.length <= 3 &&
+                policy.roles.every(value => STUDENT_ROLES.includes(value)) && new Set(policy.roles).size === policy.roles.length);
+        }
+
+        function validEligibilityPolicies(policies) {
+            return Boolean(policies && typeof policies === 'object' && Object.keys(policies).length === ALL_CLUB_IDS.length &&
+                ALL_CLUB_IDS.every(id => validClubPolicy(policies[id])));
+        }
+
+        function policyAllows(policy, info) {
+            return Boolean(validClubPolicy(policy) && info && policy.enabled &&
+                policy.genders.includes(info.gender) && policy.roles.includes(info.role));
+        }
+
+        function policyDescription(policy) {
+            if (!validClubPolicy(policy)) return '资格设置尚未就绪 / Tetapan kelayakan belum tersedia';
+            if (!policy.enabled) return '此活动暂不开放 / Aktiviti ditutup';
+            const conditions = [];
+            if (policy.genders.length === 1) conditions.push(policy.genders[0] === 'LELAKI' ? '仅限男学生 / Murid lelaki sahaja' : '仅限女学生 / Murid perempuan sahaja');
+            if (policy.roles.length < 3) conditions.push(policy.roles.map(role => ROLE_LABELS[role]).join(' 或 / atau '));
+            return conditions.join('；') || '不限性别及职位 / Semua jantina dan jawatan';
+        }
+
+        function malaysiaDateTime(milliseconds) {
+            return new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kuching', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date(milliseconds));
+        }
 
         let allRecords = [];
         let deleteTargetId = null;
@@ -692,19 +836,22 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
         }
 
         async function handleRosterImport() {
+            if (!ensureAdminAccess() || rosterImportBusy || readinessPromise) return;
             const uid = adminUserId;
             const epoch = ++rosterUiEpoch;
             try {
                 requireAdminSession(uid);
                 if (!pendingRosterImport) return;
                 const records = pendingRosterImport;
+                rosterImportBusy = true;
+                await setRegistrationReadiness(uid, false);
                 rosterFileInput.disabled = true;
                 rosterImportButton.disabled = true;
                 rosterMessage('正在保存名单… / Menyimpan senarai…');
                 const batch = writeBatch(db);
                 const updatedAt = new Date().toISOString();
                 for (const record of records) {
-                    batch.set(doc(db, 'student_rosters', record.className), { ...record, updatedAt });
+                    batch.set(doc(db, 'student_rosters', record.className), { ...preparedRosterRecord(record), updatedAt });
                 }
                 await batch.commit();
                 requireAdminSession(uid);
@@ -713,6 +860,7 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
                 rosterFileInput.value = '';
                 rosterImportPreview.textContent = '';
                 await refreshRosterStatus(uid);
+                await refreshRegistrationReadiness(uid);
                 showToast('学生姓名名单已导入。', 'Senarai nama murid berjaya diimport.', 'success');
             } catch (error) {
                 if (!currentAdmin(uid) || epoch !== rosterUiEpoch) return;
@@ -720,14 +868,348 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
                 rosterMessage('导入失败，未显示成功。请检查网络及配套规则后重试。\nImport gagal. Semak rangkaian dan peraturan yang disediakan, kemudian cuba lagi.', true);
             } finally {
                 if (currentAdmin(uid) && epoch === rosterUiEpoch) {
-                    rosterFileInput.disabled = false;
-                    rosterImportButton.disabled = !pendingRosterImport;
+                    rosterImportBusy = false;
+                    rosterFileInput.disabled = !adminReady;
+                    rosterImportButton.disabled = !adminReady || !pendingRosterImport;
                 }
             }
         }
 
         rosterFileInput.addEventListener('change', handleRosterFileChange);
         rosterImportButton.addEventListener('click', handleRosterImport);
+
+        const registrationSettingsForm = document.getElementById('registration-settings-form');
+        const registrationModeInput = document.getElementById('registration-mode');
+        const registrationStartInput = document.getElementById('registration-start');
+        const registrationEndInput = document.getElementById('registration-end');
+        const showCountdownInput = document.getElementById('registration-show-countdown');
+        const saveRegistrationButton = document.getElementById('btn-save-registration');
+        const registrationAdminStatus = document.getElementById('registration-admin-status');
+        const indexAdminStatus = document.getElementById('registration-index-status');
+        const recheckIndexButton = document.getElementById('btn-recheck-index');
+        const eligibilityForm = document.getElementById('eligibility-form');
+        const eligibilityRows = document.getElementById('eligibility-rows');
+        const saveEligibilityButton = document.getElementById('btn-save-eligibility');
+        let adminRegistrationControl = null;
+        let adminPolicies = null;
+        let unsubscribeRegistrationControl = null;
+        let unsubscribePolicies = null;
+        let adminClockInterval = null;
+        let registrationDraftDirty = false;
+        let policyDraftDirty = false;
+        let readinessPromise = null;
+        let rosterImportBusy = false;
+
+        function timeInputValue(milliseconds) {
+            return milliseconds ? new Date(milliseconds + 8 * 3600000).toISOString().slice(0, 16) : '';
+        }
+
+        function inputMalaysiaTime(value) {
+            if (!value) return 0;
+            const result = Date.parse(value + '+08:00');
+            if (!Number.isSafeInteger(result) || result <= 0) throw new Error('日期时间无效 / Tarikh atau masa tidak sah.');
+            return result;
+        }
+
+        function preparedRosterRecord(record) {
+            return { ...record, students: Object.fromEntries(record.names.map(name => [studentKeyFor(record.className, name), name])) };
+        }
+
+        function renderAdminRegistrationStatus() {
+            const phase = registrationPhase(adminRegistrationControl);
+            const titles = { setup: '尚未完成设置 / Tetapan Belum Selesai', maintenance: '名单检查未完成，报名暂不开放 / Semakan Belum Selesai', upcoming: '等待开放 / Menunggu Pembukaan', open: '报名开放中 / Pendaftaran Dibuka', closed: '报名已关闭 / Pendaftaran Ditutup' };
+            let text = titles[phase];
+            if (adminRegistrationControl) {
+                text += `\n开放时间 / Masa buka: ${malaysiaDateTime(adminRegistrationControl.startsAt)} (MYT)`;
+                text += adminRegistrationControl.endsAt ? `\n关闭时间 / Masa tutup: ${malaysiaDateTime(adminRegistrationControl.endsAt)} (MYT)` : '\n未设置自动关闭时间 / Tiada masa tutup automatik';
+                if (phase === 'upcoming') {
+                    const seconds = Math.max(0, Math.ceil((adminRegistrationControl.startsAt - Date.now()) / 1000));
+                    text += `\n倒数 / Kiraan detik: ${Math.floor(seconds / 86400)}d ${String(Math.floor(seconds / 3600) % 24).padStart(2,'0')}:${String(Math.floor(seconds / 60) % 60).padStart(2,'0')}:${String(seconds % 60).padStart(2,'0')}`;
+                }
+            }
+            registrationAdminStatus.textContent = text;
+            registrationAdminStatus.dataset.phase = phase;
+        }
+
+        function renderEligibilityEditor(policies) {
+            eligibilityRows.innerHTML = '';
+            for (const [category, ids] of Object.entries(clubCategories)) {
+                const heading = document.createElement('h4');
+                heading.textContent = category;
+                eligibilityRows.appendChild(heading);
+                for (const id of ids) {
+                    const policy = policies[id];
+                    const genders = policy.genders.length === 2 ? 'ALL' : policy.genders[0];
+                    const roles = policy.roles.length === 3 ? 'ALL' : policy.roles.length === 2 ?
+                        (policy.roles.includes('NONE') ? policy.roles.join(',') : 'PSS,PRS') : policy.roles[0];
+                    const row = document.createElement('div');
+                    row.className = 'eligibility-row';
+                    row.innerHTML = `<div class="eligibility-club-name">${escapeHtml(clubNames[id])}</div>
+                        <label>活动状态 / Status<select data-policy-id="${id}" data-policy-field="enabled" aria-label="${escapeHtml(clubNames[id])} 活动状态"><option value="true">开放 / Buka</option><option value="false">关闭 / Tutup</option></select></label>
+                        <label>性别 / Jantina<select data-policy-id="${id}" data-policy-field="gender" aria-label="${escapeHtml(clubNames[id])} 性别"><option value="ALL">不限 / Semua</option><option value="LELAKI">男 / LELAKI</option><option value="PEREMPUAN">女 / PEREMPUAN</option></select></label>
+                        <label>职位 / Jawatan<select data-policy-id="${id}" data-policy-field="role" aria-label="${escapeHtml(clubNames[id])} 职位"><option value="ALL">不限 / Semua</option><option value="NONE">无 / TIADA</option><option value="PSS">图书管理员 / PSS</option><option value="PRS">辅导小尖兵 / PRS</option><option value="PSS,PRS">图书管理员或辅导小尖兵 / PSS atau PRS</option><option value="NONE,PSS">无或图书管理员 / Tiada atau PSS</option><option value="NONE,PRS">无或辅导小尖兵 / Tiada atau PRS</option></select></label>`;
+                    eligibilityRows.appendChild(row);
+                    row.querySelector('[data-policy-field="enabled"]').value = String(policy.enabled);
+                    row.querySelector('[data-policy-field="gender"]').value = genders;
+                    row.querySelector('[data-policy-field="role"]').value = roles;
+                }
+            }
+        }
+
+        function stopAdminControlSubscriptions() {
+            if (unsubscribeRegistrationControl) unsubscribeRegistrationControl();
+            if (unsubscribePolicies) unsubscribePolicies();
+            if (adminClockInterval) clearInterval(adminClockInterval);
+            unsubscribeRegistrationControl = null;
+            unsubscribePolicies = null;
+            adminClockInterval = null;
+            adminRegistrationControl = null;
+            adminPolicies = null;
+            registrationDraftDirty = false;
+            policyDraftDirty = false;
+            readinessPromise = null;
+            rosterImportBusy = false;
+            registrationSettingsForm.reset();
+            registrationStartInput.value = timeInputValue(DEFAULT_OPENING_MS);
+            registrationModeInput.value = 'scheduled';
+            showCountdownInput.checked = true;
+            eligibilityRows.innerHTML = '';
+            registrationAdminStatus.textContent = '';
+            indexAdminStatus.textContent = '';
+            [saveRegistrationButton, saveEligibilityButton, recheckIndexButton].forEach(button => button.disabled = true);
+        }
+
+        function startAdminControlSubscriptions(uid) {
+            unsubscribeRegistrationControl = onSnapshot(doc(db, 'public_settings', 'registration'), snapshot => {
+                if (!currentAdmin(uid)) return;
+                adminRegistrationControl = snapshot.exists() && validRegistrationControl(snapshot.data()) ? snapshot.data() : null;
+                if (!registrationDraftDirty) {
+                    const value = adminRegistrationControl || defaultRegistrationControl();
+                    registrationModeInput.value = value.mode;
+                    registrationStartInput.value = timeInputValue(value.startsAt);
+                    registrationEndInput.value = timeInputValue(value.endsAt);
+                    showCountdownInput.checked = value.showCountdown;
+                }
+                renderAdminRegistrationStatus();
+            }, error => {
+                if (currentAdmin(uid)) registrationAdminStatus.textContent = '无法读取时间设置，请确认新版规则已发布。\nGagal membaca tetapan masa. Semak peraturan baharu.';
+            });
+            unsubscribePolicies = onSnapshot(doc(db, 'club_settings', 'eligibility'), snapshot => {
+                if (!currentAdmin(uid)) return;
+                const value = snapshot.exists() ? snapshot.data().clubs : null;
+                adminPolicies = validEligibilityPolicies(value) ? value : null;
+                if (!policyDraftDirty) renderEligibilityEditor(adminPolicies || defaultEligibilityPolicies());
+            }, error => {
+                if (currentAdmin(uid)) document.getElementById('eligibility-editor-status').textContent = '资格设置读取失败，请刷新重试。 / Gagal memuatkan syarat. Sila muat semula.';
+            });
+            adminClockInterval = setInterval(() => { if (currentAdmin(uid)) renderAdminRegistrationStatus(); }, 1000);
+        }
+
+        async function setRegistrationReadiness(uid, ready) {
+            requireAdminSession(uid);
+            await runTransaction(db, async transaction => {
+                requireAdminSession(uid);
+                const reference = doc(db, 'public_settings', 'registration');
+                const snapshot = await transaction.get(reference);
+                const current = snapshot.exists() && validRegistrationControl(snapshot.data()) ? snapshot.data() : defaultRegistrationControl();
+                if (!snapshot.exists() || current.ready !== ready) transaction.set(reference, { ...current, ready, updatedAt: new Date().toISOString() });
+            });
+            requireAdminSession(uid);
+        }
+
+        async function initializeRegistrationDocuments(uid) {
+            requireAdminSession(uid);
+            await runTransaction(db, async transaction => {
+                const controlRef = doc(db, 'public_settings', 'registration');
+                const policiesRef = doc(db, 'club_settings', 'eligibility');
+                const [control, policies] = await Promise.all([transaction.get(controlRef), transaction.get(policiesRef)]);
+                requireAdminSession(uid);
+                if (!control.exists()) transaction.set(controlRef, defaultRegistrationControl());
+                if (!policies.exists()) transaction.set(policiesRef, { clubs: defaultEligibilityPolicies(), updatedAt: new Date().toISOString() });
+            });
+            requireAdminSession(uid);
+        }
+
+        async function prepareStudentClaims(records, uid) {
+            requireAdminSession(uid);
+            const [rosterSnapshot, claimSnapshot] = await Promise.all([
+                getDocsFromServer(collection(db, 'student_rosters')), getDocsFromServer(collection(db, 'student_claims'))
+            ]);
+            requireAdminSession(uid);
+            const directory = new Map();
+            const classNames = new Set();
+            const rosterWrites = [];
+            const claims = new Map();
+            const issues = [];
+            rosterSnapshot.forEach(item => {
+                const data = item.data();
+                if (!ROSTER_CLASSES.includes(item.id)) return;
+                if (data.className !== item.id || !Array.isArray(data.names) || !data.names.length ||
+                    data.names.some(name => typeof name !== 'string' || !name.trim() || name.length > 120) ||
+                    new Set(data.names).size !== data.names.length) {
+                    issues.push(`${item.id} 的名单格式需要核对 / Semak format senarai ${item.id}`); return;
+                }
+                classNames.add(item.id);
+                const record = preparedRosterRecord({ className: item.id, names: data.names });
+                for (const [key, name] of Object.entries(record.students)) directory.set(key, { name, cls: item.id });
+                if (!data.students || Object.keys(data.students).length !== data.names.length ||
+                    data.names.some(name => data.students[studentKeyFor(item.id, name)] !== name)) rosterWrites.push(record);
+            });
+            if (classNames.size !== ROSTER_CLASSES.length) issues.push('请先导入完整的五个班名单 / Sila import kelima-lima senarai kelas');
+            claimSnapshot.forEach(item => claims.set(item.id, item.data()));
+            const recordsByUid = new Map(records.map(record => [record.id, record]));
+            const expected = new Map();
+            for (const record of records) {
+                if (record.submitted !== true) continue;
+                const info = record.studentInfo;
+                const key = typeof info?.cls === 'string' && typeof info?.name === 'string' ? studentKeyFor(info.cls, info.name) : '';
+                if (!directory.has(key) || (info.studentKey && info.studentKey !== key)) {
+                    issues.push(`报名资料无法对应名单，请核对：${info?.cls || '-'} ${info?.name || '-'} [${record.id}]`); continue;
+                }
+                if (!validSelectionData(record.selections)) issues.push(`该报名活动不完整，请核对：${info.name} [${record.id}]`);
+                if (!expected.has(key)) expected.set(key, []);
+                expected.get(key).push(record.id);
+            }
+            const pendingClaims = [];
+            for (const [key, owners] of expected) {
+                if (owners.length > 1) {
+                    issues.push(`已有重复报名，请保留正确记录后删除多余记录：${directory.get(key).name} [${owners.join(', ')}]`); continue;
+                }
+                const old = claims.get(key);
+                if (!old) pendingClaims.push({ key, ownerUid: owners[0] });
+                else if (old.ownerUid !== owners[0]) issues.push(`姓名锁定与报名不符，请核对：${directory.get(key).name}`);
+            }
+            const orphanKeys = [];
+            for (const [key, claim] of claims) {
+                if (typeof claim.ownerUid !== 'string') { issues.push('存在格式错误的姓名锁定，请联系维护人员 / Indeks nama tidak sah'); continue; }
+                let owner = recordsByUid.get(claim.ownerUid);
+                if (!owner) {
+                    const snapshot = await getDocFromServer(doc(db, 'club_registrations', claim.ownerUid));
+                    requireAdminSession(uid);
+                    if (snapshot.exists()) owner = snapshot.data();
+                    else { orphanKeys.push(key); continue; }
+                }
+                const info = owner.studentInfo;
+                if (!info || studentKeyFor(info.cls || '', info.name || '') !== key) issues.push(`姓名锁定资料需要核对 [${claim.ownerUid}]`);
+            }
+            if (rosterWrites.length || pendingClaims.length || orphanKeys.length || issues.length) await setRegistrationReadiness(uid, false);
+            if (rosterWrites.length) {
+                const batch = writeBatch(db);
+                for (const record of rosterWrites) batch.set(doc(db, 'student_rosters', record.className), { ...record, updatedAt: new Date().toISOString() });
+                requireAdminSession(uid); await batch.commit(); requireAdminSession(uid);
+            }
+            for (const key of orphanKeys) {
+                await runTransaction(db, async transaction => {
+                    const reference = doc(db, 'student_claims', key);
+                    const claim = await transaction.get(reference);
+                    if (!claim.exists()) return;
+                    const owner = await transaction.get(doc(db, 'club_registrations', claim.data().ownerUid));
+                    requireAdminSession(uid);
+                    if (!owner.exists()) transaction.delete(reference);
+                });
+            }
+            for (let offset = 0; offset < pendingClaims.length; offset += 6) {
+                const group = pendingClaims.slice(offset, offset + 6);
+                await runTransaction(db, async transaction => {
+                    const snapshots = await Promise.all(group.map(item => transaction.get(doc(db, 'student_claims', item.key))));
+                    requireAdminSession(uid);
+                    group.forEach((item, index) => {
+                        if (snapshots[index].exists()) {
+                            if (snapshots[index].data().ownerUid !== item.ownerUid) throw new Error('发现重复的学生报名 / Pendaftaran murid berulang.');
+                        } else transaction.set(doc(db, 'student_claims', item.key), { ownerUid: item.ownerUid });
+                    });
+                });
+            }
+            requireAdminSession(uid);
+            const ready = issues.length === 0;
+            await setRegistrationReadiness(uid, ready);
+            indexAdminStatus.textContent = ready
+                ? `姓名重复报名检查已就绪。已核对 ${expected.size} 名已报名学生。\nSemakan nama sedia. ${expected.size} murid berdaftar telah disemak.`
+                : '报名暂不开放，请核对以下资料。不会自动删除任何报名。\nPendaftaran ditangguh. Sila semak rekod berikut.\n' + issues.join('\n');
+            indexAdminStatus.dataset.error = String(!ready);
+            return { ready, issues, migrated: pendingClaims.length };
+        }
+
+        async function refreshRegistrationReadiness(uid = adminUserId) {
+            requireAdminSession(uid);
+            if (readinessPromise) return readinessPromise;
+            readinessPromise = (async () => {
+                indexAdminStatus.textContent = '正在核对姓名和已有报名… / Menyemak nama dan pendaftaran…';
+                const snapshot = await getDocsFromServer(collection(db, 'club_registrations'));
+                requireAdminSession(uid);
+                const records = [];
+                snapshot.forEach(item => records.push({ ...item.data(), id: item.id }));
+                return prepareStudentClaims(records, uid);
+            })();
+            try { return await readinessPromise; }
+            finally { if (currentAdmin(uid)) readinessPromise = null; }
+        }
+
+        async function prepareControlPanel(records, uid) {
+            await initializeRegistrationDocuments(uid);
+            const summary = await synchronizeEnrollmentSummaries(records, uid);
+            const index = await prepareStudentClaims(records, uid);
+            return { ...summary, ...index };
+        }
+
+        registrationSettingsForm.addEventListener('input', () => { registrationDraftDirty = true; });
+        eligibilityForm.addEventListener('input', () => { policyDraftDirty = true; });
+        registrationSettingsForm.addEventListener('submit', async event => {
+            event.preventDefault();
+            if (!ensureAdminAccess()) return;
+            const uid = adminUserId;
+            saveRegistrationButton.disabled = true;
+            try {
+                const fields = { mode: registrationModeInput.value, startsAt: inputMalaysiaTime(registrationStartInput.value), endsAt: inputMalaysiaTime(registrationEndInput.value), showCountdown: showCountdownInput.checked };
+                if (!validRegistrationControl({ ...fields, ready: false })) throw new Error('请检查开放及关闭时间，关闭时间须晚于开放时间。\nSemak masa buka dan tutup.');
+                await runTransaction(db, async transaction => {
+                    const reference = doc(db, 'public_settings', 'registration');
+                    const snapshot = await transaction.get(reference);
+                    requireAdminSession(uid);
+                    transaction.set(reference, { ...fields, ready: snapshot.exists() && snapshot.data().ready === true, updatedAt: new Date().toISOString() });
+                });
+                requireAdminSession(uid);
+                registrationDraftDirty = false;
+                showToast('报名时间及开放状态已保存。', 'Masa dan status pendaftaran telah disimpan.', 'success');
+            } catch (error) {
+                if (currentAdmin(uid)) showToast(error.message || '保存失败，请重试。', 'Gagal menyimpan. Sila cuba lagi.', 'error');
+            } finally { if (currentAdmin(uid)) saveRegistrationButton.disabled = false; }
+        });
+
+        eligibilityForm.addEventListener('submit', async event => {
+            event.preventDefault();
+            if (!ensureAdminAccess()) return;
+            const uid = adminUserId;
+            saveEligibilityButton.disabled = true;
+            try {
+                const clubs = {};
+                for (const id of ALL_CLUB_IDS) {
+                    const field = name => eligibilityRows.querySelector(`[data-policy-id="${id}"][data-policy-field="${name}"]`).value;
+                    const gender = field('gender');
+                    const role = field('role');
+                    clubs[id] = { enabled: field('enabled') === 'true', genders: gender === 'ALL' ? [...STUDENT_GENDERS] : [gender], roles: role === 'ALL' ? [...STUDENT_ROLES] : role.split(',') };
+                }
+                if (!validEligibilityPolicies(clubs)) throw new Error('资格条件不完整，请重新选择。 / Syarat tidak lengkap.');
+                requireAdminSession(uid);
+                await setDoc(doc(db, 'club_settings', 'eligibility'), { clubs, updatedAt: new Date().toISOString() });
+                requireAdminSession(uid);
+                policyDraftDirty = false;
+                document.getElementById('eligibility-editor-status').textContent = '资格条件已保存。 / Syarat kelayakan telah disimpan.';
+                showToast('各项活动的资格条件已保存。', 'Syarat setiap aktiviti telah disimpan.', 'success');
+            } catch (error) {
+                if (currentAdmin(uid)) showToast('资格条件保存失败，请重试。', 'Gagal menyimpan syarat. Sila cuba lagi.', 'error');
+            } finally { if (currentAdmin(uid)) saveEligibilityButton.disabled = false; }
+        });
+
+        recheckIndexButton.addEventListener('click', async () => {
+            if (!ensureAdminAccess()) return;
+            if (rosterImportBusy) return;
+            const uid = adminUserId;
+            recheckIndexButton.disabled = true;
+            try { await refreshRegistrationReadiness(uid); }
+            catch (error) { if (currentAdmin(uid)) indexAdminStatus.textContent = '核对失败，请检查网络及新版规则后重试。\nSemakan gagal. Semak rangkaian dan peraturan baharu.'; }
+            finally { if (currentAdmin(uid)) recheckIndexButton.disabled = false; }
+        });
 
         function isAdminUser(user) {
             return Boolean(user && user.uid === ADMIN_UID && user.emailVerified === true &&
@@ -755,10 +1237,13 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
         }
 
         function setManagementEnabled(enabled) {
-            [btnSettings, btnExport, btnConfirmDelete, btnSaveSettings].forEach(button => button.disabled = !enabled);
+            [btnSettings, btnExport, btnConfirmDelete, btnSaveSettings, saveRegistrationButton, saveEligibilityButton, recheckIndexButton].forEach(button => button.disabled = !enabled);
+            rosterFileInput.disabled = !enabled || rosterImportBusy;
+            rosterImportButton.disabled = !enabled || rosterImportBusy || !pendingRosterImport;
         }
 
         function clearAdminData() {
+            stopAdminControlSubscriptions();
             if (unsubscribeRecords) unsubscribeRecords();
             unsubscribeRecords = null;
             adminUserId = null;
@@ -848,13 +1333,14 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
             let syncNoticeShown = false;
             loadingState.classList.remove('hidden');
             loadingState.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin text-4xl mb-4"></i><p class="font-bold">正在读取报名并同步名额统计…</p><p class="text-sm mt-2">Memuatkan pendaftaran dan menyegerak statistik…</p>';
-            unsubscribeRecords = onSnapshot(collection(db, 'club_registrations'), async snapshot => {
+            unsubscribeRecords = onSnapshot(collection(db, 'club_registrations'), { includeMetadataChanges: true }, async snapshot => {
+                if (snapshot.metadata?.fromCache || snapshot.metadata?.hasPendingWrites) return;
                 if (!currentAdmin(uid)) return;
                 allRecords = [];
                 snapshot.forEach(item => allRecords.push({ ...item.data(), id: item.id }));
                 allRecords.sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0));
                 try {
-                    if (!initialSync) initialSync = synchronizeEnrollmentSummaries([...allRecords], uid);
+                    if (!initialSync) initialSync = prepareControlPanel([...allRecords], uid);
                     const report = await initialSync;
                     requireAdminSession(uid);
                     adminReady = true;
@@ -889,8 +1375,9 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
             adminAuthView.classList.add('hidden');
             adminMain.classList.remove('hidden');
             adminControls.classList.remove('hidden');
+            startAdminControlSubscriptions(user.uid);
             startRecordSubscription(user.uid);
-            rosterFileInput.disabled = false;
+            rosterFileInput.disabled = !adminReady;
             void refreshRosterStatus(user.uid);
         }
 
@@ -948,6 +1435,8 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
                     <td class="p-4 pl-6 text-slate-500">${time}</td>
                     <td class="p-4 font-bold text-slate-700"><span class="bg-slate-100 py-1 px-2.5 rounded-lg text-xs">${cls}</span></td>
                     <td class="p-4 font-bold text-slate-900">${name}</td>
+                    <td class="p-4 admin-profile-cell">${escapeHtml(GENDER_LABELS[record.studentInfo?.gender] || '旧报名 / Rekod lama')}</td>
+                    <td class="p-4 admin-profile-cell">${escapeHtml(ROLE_LABELS[record.studentInfo?.role] || '旧报名 / Rekod lama')}</td>
                     <td class="p-4"><span class="bg-red-50 text-red-700 py-1 px-3 rounded-lg text-xs border border-red-100">${uniform}</span></td>
                     <td class="p-4"><span class="bg-amber-50 text-amber-700 py-1 px-3 rounded-lg text-xs border border-amber-100">${society}</span></td>
                     <td class="p-4"><span class="bg-blue-50 text-blue-700 py-1 px-3 rounded-lg text-xs border border-blue-100">${sports}</span></td>
@@ -997,19 +1486,30 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
             btnConfirmDelete.disabled = true;
             try {
                 requireAdminSession(sessionUid);
-                const batch = writeBatch(db);
-                batch.delete(doc(db, 'club_registrations', targetId));
-                batch.delete(doc(db, 'club_enrollments', targetId));
-                await batch.commit();
+                await runTransaction(db, async transaction => {
+                    const regRef = doc(db, 'club_registrations', targetId);
+                    const record = await transaction.get(regRef);
+                    const info = record.exists() ? record.data().studentInfo : null;
+                    const key = info?.studentKey || (info?.cls && info?.name ? studentKeyFor(info.cls, info.name) : null);
+                    const claimRef = key ? doc(db, 'student_claims', key) : null;
+                    const claim = claimRef ? await transaction.get(claimRef) : null;
+                    requireAdminSession(sessionUid);
+                    if (record.exists()) transaction.delete(regRef);
+                    transaction.delete(doc(db, 'club_enrollments', targetId));
+                    if (claim?.exists() && claim.data().ownerUid === targetId) transaction.delete(claimRef);
+                });
                 requireAdminSession(sessionUid);
                 deleteModal.classList.add('hidden');
                 deleteTargetId = null;
-                showToast("成功删除记录，名额已释放", "Rekod berjaya dipadam, kuota telah dilepaskan.", "success");
+                showToast("成功删除记录，姓名及名额已释放", "Rekod dipadam. Nama dan kuota telah dilepaskan.", "success");
+                void refreshRegistrationReadiness(sessionUid).catch(() => {
+                    if (currentAdmin(sessionUid)) indexAdminStatus.textContent = '删除已完成；名单重新核对失败，请点击重新核对。 / Rekod dipadam. Sila jalankan semakan semula.';
+                });
             } catch (error) {
                 if (currentAdmin(sessionUid)) showToast("删除失败，请检查网络连接！", "Ralat memadam data, periksa sambungan internet.", "error");
             } finally {
                 btnConfirmDelete.innerHTML = originalText;
-                btnConfirmDelete.disabled = false;
+                btnConfirmDelete.disabled = !currentAdmin(sessionUid);
             }
         });
 
@@ -1027,7 +1527,7 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
 
             try {
                 // 双语表头
-                const exportData = [["提交时间 Masa", "家长电邮 E-mel", "班级 Kelas", "学生姓名 Nama", "制服团体 Unit Beruniform", "学会 Kelab & Persatuan", "运动与游戏 Sukan & Permainan"]];
+                const exportData = [["提交时间 Masa", "家长电邮 E-mel", "班级 Kelas", "学生姓名 Nama", "性别 Jantina", "职位 Jawatan", "制服团体 Unit Beruniform", "学会 Kelab & Persatuan", "运动与游戏 Sukan & Permainan"]];
                 
                 const currentData = searchInput.value.trim() !== '' ? 
                     allRecords.filter(r => (r.studentInfo?.name||'').toLowerCase().includes(searchInput.value.toLowerCase()) || (r.studentInfo?.cls||'').toLowerCase().includes(searchInput.value.toLowerCase())) 
@@ -1048,7 +1548,7 @@ table th:nth-child(6) > div:last-child { color: #7896a7; }
                     let sports = data.selections?.step3 || '未选 / Tiada';
                     if(clubNames[sports]) sports = clubNames[sports];
 
-                    exportData.push([timestamp, email, cls, name, uniform, society, sports]);
+                    exportData.push([timestamp, email, cls, name, GENDER_LABELS[data.studentInfo?.gender] || '旧报名 / Rekod lama', ROLE_LABELS[data.studentInfo?.role] || '旧报名 / Rekod lama', uniform, society, sports]);
                 });
 
                 const ws = XLSX.utils.aoa_to_sheet(exportData);
